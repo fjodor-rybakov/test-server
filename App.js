@@ -40,6 +40,7 @@ class App {
         this.app.get("/api/getProjects", ProjectList.getProjectList.bind(this, this.database));
         this.app.post("/api/getProject", Project.postProject.bind(this, this.database));
         this.app.post("/api/updateProfile", Profile.postUpdateProfile.bind(this, this.database));
+        this.app.post("/api/getUserListByRole", Project.postUserListByRole.bind(this, this.database));
     }
 }
 
