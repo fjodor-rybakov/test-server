@@ -2,10 +2,10 @@ import * as restify from "restify";
 import config from "./config";
 import {SignIn} from "./server-middleware/SignIn";
 import {SignUp} from "./server-middleware/SignUp";
-import {Authorization} from "./server-middleware/Authorization";
 import {ProjectList} from "./server-middleware/ProjectList";
 import {Project} from "./server-middleware/Project";
 import {Profile} from "./server-middleware/Profile";
+import {Authorization} from "./utils/Authorization";
 
 class App {
     app;
@@ -34,12 +34,13 @@ class App {
     }
 
     initRoutes() {
-        this.app.post("/api/authorization", Authorization.postAuthorization.bind(this, this.database));
+        this.app.post("/api/checkAuthorization", Authorization);
         this.app.post("/api/signIn", SignIn.postSignIn.bind(this, this.database));
         this.app.post("/api/signUp", SignUp.postSignUp.bind(this, this.database));
         this.app.get("/api/getProjects", ProjectList.getProjectList.bind(this, this.database));
         this.app.post("/api/getProject", Project.postProject.bind(this, this.database));
         this.app.post("/api/updateProfile", Profile.postUpdateProfile.bind(this, this.database));
+        this.app.post("/api/profileData", Profile.postProfileData.bind(this, this.database));
         this.app.post("/api/getUserListByRole", Project.postUserListByRole.bind(this, this.database));
     }
 }
