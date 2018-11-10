@@ -18,7 +18,7 @@ export function getProject(database, data, next) {
 
 export function getUserListByRole(database, next, role) {
     return new Promise(async (resolve) => {
-        let sql = `SELECT user.last_name, user.first_name
+        let sql = `SELECT user.last_name, user.first_name, user.id_user
                     FROM role
                     LEFT JOIN user 
                     on user.id_role = role.id_role
@@ -29,5 +29,43 @@ export function getUserListByRole(database, next, role) {
             }
             return resolve(result);
         })
+    })
+}
+
+export function createTaskImpl(database, next, data) {
+    return new Promise(async (resolve) => {
+        let sql = `INSERT INTO task VALUES 
+        (null, ${data.id_project}, ${data.id_user_manager}, '${data.description}', ${data.time}, '${data.title}')`;
+        console.log(sql);
+        await database.query(sql, function (err) {
+            if (err) {
+                return next(new errs.BadGatewayError(err));
+            }
+            const sql = `SELECT last_insert_id() as id`;
+            database.query(sql, function (err, result) {
+                if (err) {
+                    return next(new errs.BadGatewayError(err));
+                }
+                return resolve(result);
+            });
+        })
+    })
+}
+
+export function addTaskTeam(database, next, developers, id) {
+    let res = '';
+    return new Promise(async (resolve) => {
+        for (let i = 0; i < developers.length; i++) {
+            let sql = `INSERT INTO task_and_user VALUES 
+            (null, ${id}, ${developers[i].id_user})`;
+            console.log(sql);
+            await database.query(sql, function (err, result) {
+                if (err) {
+                    return next(new errs.BadGatewayError(err));
+                }
+                res = result;
+            })
+        }
+        return resolve(res);
     })
 }

@@ -8,7 +8,6 @@ export function Authorization(req, res, next) {
     if (!Utils.isset(data.token)) {
         return next(new errs.InvalidArgumentError("Not enough body data"));
     }
-    console.log(data);
     try {
         res.send(jwt.verify(data.token, config.jwt.secret));
     } catch (e) {

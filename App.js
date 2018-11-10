@@ -42,6 +42,7 @@ class App {
         this.app.post("/api/updateProfile", Profile.postUpdateProfile.bind(this, this.database));
         this.app.post("/api/profileData", Profile.postProfileData.bind(this, this.database));
         this.app.post("/api/getUserListByRole", Project.postUserListByRole.bind(this, this.database));
+        this.app.post("/api/createTask", Project.createTask.bind(this, this.database));
     }
 }
 
