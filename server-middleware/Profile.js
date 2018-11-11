@@ -39,17 +39,24 @@ export class Profile {
             });
     }
 
-    static postUpdateProfile(database, req, res, next) {
+    static async postUpdateProfile(database, req, res, next) {
         const data = JSON.parse(req.body);
         if (!Utils.isset(data)) {
             return next(new errs.InvalidArgumentError("Not enough body data"));
         }
 
         const base64Data = data.photo.replace(/^data:image\/png;base64,/, "");
-        const path = "resources/photo_" + data.id_user + ".png";
-        fs.writeFile(path, base64Data, 'base64', function(err) {
-            console.log(err);
-        });
+        let path = "resources/photo_" + data.id_user + ".png";
+        if (data.photo !== "") {
+            await fs.writeFile(path, base64Data, 'base64', function (err) {
+                console.log(err);
+            });
+        }
+
+        await Profile.checkPhoto(path)
+            .then((data) => {
+                return path = data;
+            });
 
         updateProfile(database, data, path)
             .then(() => {
@@ -58,5 +65,17 @@ export class Profile {
             .catch(() => {
                 return next(new errs.InvalidArgumentError("Request database error"));
             });
+    }
+
+    static checkPhoto(path) {
+        return new Promise((resolve) => {
+            fs.readFile(path, {encoding: "base64"}, (err) => {
+                if (err) {
+                    return resolve("resources/default-avatar.png");
+                }
+
+                return resolve(path);
+            });
+        });
     }
 }

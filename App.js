@@ -37,10 +37,13 @@ class App {
         this.app.post("/api/checkAuthorization", Authorization);
         this.app.post("/api/signIn", SignIn.postSignIn.bind(this, this.database));
         this.app.post("/api/signUp", SignUp.postSignUp.bind(this, this.database));
+
         this.app.get("/api/getProjects", ProjectList.getProjectList.bind(this, this.database));
-        this.app.post("/api/getProject", Project.postProject.bind(this, this.database));
+
         this.app.post("/api/updateProfile", Profile.postUpdateProfile.bind(this, this.database));
         this.app.post("/api/profileData", Profile.postProfileData.bind(this, this.database));
+
+        this.app.post("/api/getProject", Project.postProject.bind(this, this.database));
         this.app.post("/api/getUserListByRole", Project.postUserListByRole.bind(this, this.database));
         this.app.post("/api/createTask", Project.createTask.bind(this, this.database));
     }
