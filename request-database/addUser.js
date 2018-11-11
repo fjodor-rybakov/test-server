@@ -12,7 +12,8 @@ export function addUser(database, data, next) {
             }
         });
 
-        sql = `INSERT INTO user VALUES (null, '', '', 1, '', '${data.password}', '${data.email}', '')`;
+        sql = `INSERT INTO user VALUES 
+        (null, '', '', 1, '', '${data.password}', '${data.email}', '${"resources/default-avatar.png"}')`;
         await database.query(sql, function (err) {
             if (err) {
                 return next(new errs.BadGatewayError(err));

@@ -4,6 +4,7 @@ import * as errs from "restify-errors";
 import {getProfile} from "../request-database/getProfile";
 import * as jwt from "jsonwebtoken";
 import config from "../config";
+import fs from "fs";
 
 export class Profile {
     static postProfileData(database, req, res, next) {
@@ -20,7 +21,18 @@ export class Profile {
         const id_user = dataUser.id_user;
         getProfile(database, id_user, next)
             .then((data) => {
-                res.send(data[0]);
+                console.log(data[0]);
+                if (data[0].photo === "") {
+                    res.send(data[0]);
+                }
+                fs.readFile(data[0].photo, {encoding: "base64"}, async (err, result) => {
+                    if (err) {
+                        return next(new errs.InternalServerError("Read photo error"));
+                    }
+                    const newData = data[0];
+                    newData.photo = "data:image/png;base64," + result;
+                    res.send(newData);
+                });
             })
             .catch(() => {
                 res.send("err");
@@ -32,7 +44,14 @@ export class Profile {
         if (!Utils.isset(data)) {
             return next(new errs.InvalidArgumentError("Not enough body data"));
         }
-        updateProfile(database, data)
+
+        const base64Data = data.photo.replace(/^data:image\/png;base64,/, "");
+        const path = "resources/photo_" + data.id_user + ".png";
+        fs.writeFile(path, base64Data, 'base64', function(err) {
+            console.log(err);
+        });
+
+        updateProfile(database, data, path)
             .then(() => {
                 res.send("success");
             })
