@@ -2,8 +2,8 @@ import * as errs from "restify-errors";
 
 export function getProject(database, data, next) {
     return new Promise(async (resolve, reject) => {
-        let sql = `SELECT * FROM project WHERE id_project = ${data.id}`;
-        await database.query(sql, function (err, result) {
+        let sql = `SELECT * FROM project WHERE id_project = ?`;
+        await database.query(sql, [data.id], function (err, result) {
             if (err) {
                 return next(new errs.BadGatewayError(err));
             }
@@ -22,8 +22,8 @@ export function getUserListByRole(database, next, role) {
                     FROM role
                     LEFT JOIN user 
                     on user.id_role = role.id_role
-                    where role.name = '${role}'`;
-        await database.query(sql, function (err, result) {
+                    where role.name = ?`;
+        await database.query(sql, [role], function (err, result) {
             if (err) {
                 return next(new errs.BadGatewayError(err));
             }
@@ -35,9 +35,10 @@ export function getUserListByRole(database, next, role) {
 export function createTaskImpl(database, next, data) {
     return new Promise(async (resolve) => {
         let sql = `INSERT INTO task VALUES 
-        (null, ${data.id_project}, ${data.id_user_manager}, '${data.description}', ${data.time}, '${data.title}')`;
+        (null, ?, ?, ?, ?, ?)`;
         console.log(sql);
-        await database.query(sql, function (err) {
+        const newData = [data.id_project, data.id_user_manager, data.description, data.time, data.title];
+        await database.query(sql, newData, function (err) {
             if (err) {
                 return next(new errs.BadGatewayError(err));
             }
@@ -57,9 +58,9 @@ export function addTaskTeam(database, next, developers, id) {
     return new Promise(async (resolve) => {
         for (let i = 0; i < developers.length; i++) {
             let sql = `INSERT INTO task_and_user VALUES 
-            (null, ${id}, ${developers[i].id_user})`;
+            (null, ?, ?)`;
             console.log(sql);
-            await database.query(sql, function (err, result) {
+            await database.query(sql, [id, developers[i].id_user], function (err, result) {
                 if (err) {
                     return next(new errs.BadGatewayError(err));
                 }

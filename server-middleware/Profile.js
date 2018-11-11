@@ -25,14 +25,15 @@ export class Profile {
                 if (data[0].photo === "") {
                     res.send(data[0]);
                 }
-                fs.readFile(data[0].photo, {encoding: "base64"}, async (err, result) => {
-                    if (err) {
-                        return next(new errs.InternalServerError("Read photo error"));
-                    }
-                    const newData = data[0];
-                    newData.photo = "data:image/png;base64," + result;
-                    res.send(newData);
-                });
+
+                Profile.checkPhoto(data[0].photo)
+                    .then((path) => {
+                        fs.readFile(path, {encoding: "base64"}, (err, result) => {
+                            const newData = data[0];
+                            newData.photo = "data:image/png;base64," + result;
+                            res.send(newData);
+                        });
+                    });
             })
             .catch(() => {
                 res.send("err");
@@ -73,7 +74,6 @@ export class Profile {
                 if (err) {
                     return resolve("resources/default-avatar.png");
                 }
-
                 return resolve(path);
             });
         });
