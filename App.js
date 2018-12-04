@@ -4,6 +4,7 @@ import {SignIn} from "./server-middleware/SignIn";
 import {SignUp} from "./server-middleware/SignUp";
 import {ProjectList} from "./server-middleware/ProjectList";
 import {Project} from "./server-middleware/Project";
+import {Tasks} from "./server-middleware/Tasks";
 import {Profile} from "./server-middleware/Profile";
 import {Authorization} from "./utils/Authorization";
 
@@ -39,6 +40,9 @@ class App {
         this.app.post("/api/signUp", SignUp.postSignUp.bind(this, this.database));
 
         this.app.get("/api/getProjects", ProjectList.getProjectList.bind(this, this.database));
+        this.app.post("/api/getTasksList", Tasks.getTasksList.bind(this, this.database));
+        this.app.post("/api/getTracks", Tasks.getTracks.bind(this, this.database));
+        this.app.post("/api/addTrack", Tasks.addTrack.bind(this, this.database));
 
         this.app.post("/api/updateProfile", Profile.postUpdateProfile.bind(this, this.database));
         this.app.post("/api/profileData", Profile.postProfileData.bind(this, this.database));
