@@ -9,7 +9,6 @@ import fs from "fs";
 export class Profile {
     static postProfileData(database, req, res, next) {
         const token = req.headers["x-guide-key"];
-        console.log("token", token);
         if (!Utils.isset(token)) {
             return next(new errs.InvalidArgumentError("Not enough body data"));
         }
@@ -42,7 +41,16 @@ export class Profile {
     }
 
     static async postUpdateProfile(database, req, res, next) {
-        const data = JSON.parse(req.body);
+        const token = req.headers["x-guide-key"];
+        if (!Utils.isset(token)) {
+            return next(new errs.InvalidArgumentError("Not enough body data"));
+        }
+        const data = req.body;
+        try {
+            jwt.verify(token, config.jwt.secret);
+        } catch (e) {
+            return next(new errs.GoneError("token expired"));
+        }
         if (!Utils.isset(data)) {
             return next(new errs.InvalidArgumentError("Not enough body data"));
         }
