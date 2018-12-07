@@ -7,7 +7,6 @@ import config from "../config";
 export class ProjectList {
     static getProjectList(database, req, res, next) {
         const token = req.headers["x-guide-key"];
-        console.log(token);
         if (!Utils.isset(token)) {
             return next(new errs.InvalidArgumentError("Not enough body data"));
         }

@@ -49,7 +49,7 @@ class App {
         this.app.put("/api/profile", Profile.postUpdateProfile.bind(this, this.database));
         this.app.get("/api/profile", Profile.postProfileData.bind(this, this.database));
 
-        this.app.post("/api/getProject", Project.postProject.bind(this, this.database));
+        this.app.post("/api/project", Project.postProject.bind(this, this.database));
         this.app.post("/api/getUserListByRole", Project.postUserListByRole.bind(this, this.database));
         this.app.post("/api/createTask", Project.createTask.bind(this, this.database));
     }

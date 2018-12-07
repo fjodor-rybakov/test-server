@@ -1,8 +1,21 @@
 import {addTaskTeam, createTaskImpl, getProject, getUserListByRole} from "../request-database/getProject";
+import Utils from "../utils/Utils";
+import * as errs from "restify-errors";
+import * as jwt from "jsonwebtoken";
+import config from "../config";
 
 export class Project {
     static postProject(database, req, res, next) {
-        const data = JSON.parse(req.body);
+        const token = req.headers["x-guide-key"];
+        if (!Utils.isset(token)) {
+            return next(new errs.InvalidArgumentError("Not enough body data"));
+        }
+        try {
+            jwt.verify(token, config.jwt.secret);
+        } catch (e) {
+            return next(new errs.GoneError("token expired"));
+        }
+        const data = req.body;
         getProject(database, data, next)
             .then((data) => {
                 res.send(data);
