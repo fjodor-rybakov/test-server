@@ -1,8 +1,8 @@
 import * as errs from "restify-errors";
 
-export function getTracks(database, next, data) {
+export function getTracks(database, next, taskId) {
     return new Promise(async (resolve, reject) => {
-        let sql = `SELECT * FROM track WHERE id_task = ${data.id_task}`;
+        let sql = `SELECT * FROM track WHERE id_task = ${taskId}`;
         await database.query(sql, function (err, result) {
             if (err) {
                 return next(new errs.BadGatewayError(err));

@@ -41,14 +41,14 @@ class App {
         this.app.post("/api/signUp", SignUp.singUp.bind(this, this.database));
 
         this.app.get("/api/projectList", ProjectList.getProjectList.bind(this, this.database));
-        this.app.post("/api/getTasksList", Tasks.getTasksList.bind(this, this.database));
-        this.app.post("/api/getTracks", Tasks.getTracks.bind(this, this.database));
+        this.app.post("/api/tasksList", Tasks.tasksList.bind(this, this.database));
+        this.app.get("/api/tracks/:taskId", Tasks.tracks.bind(this, this.database));
         this.app.post("/api/addTrack", Tasks.addTrack.bind(this, this.database));
 
         this.app.put("/api/profile", Profile.updateProfile.bind(this, this.database));
         this.app.get("/api/profile", Profile.getProfileData.bind(this, this.database));
 
-        this.app.post("/api/project", Project.project.bind(this, this.database));
+        this.app.get("/api/project/:userId", Project.project.bind(this, this.database));
         this.app.post("/api/getUserListByRole", Project.postUserListByRole.bind(this, this.database));
         this.app.post("/api/createTask", Project.createTask.bind(this, this.database));
     }

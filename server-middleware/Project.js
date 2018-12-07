@@ -15,8 +15,9 @@ export class Project {
         } catch (e) {
             return next(new errs.GoneError("token expired"));
         }
-        const data = req.body;
-        getProject(database, data, next)
+        const userId = req.params.userId;
+        console.log(userId);
+        getProject(database, userId, next)
             .then((data) => {
                 res.send(data);
             })

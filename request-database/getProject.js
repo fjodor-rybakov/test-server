@@ -1,9 +1,9 @@
 import * as errs from "restify-errors";
 
-export function getProject(database, data, next) {
+export function getProject(database, userId, next) {
     return new Promise(async (resolve, reject) => {
         let sql = `SELECT * FROM project WHERE id_project = ?`;
-        await database.query(sql, [data.id], function (err, result) {
+        await database.query(sql, [userId], function (err, result) {
             if (err) {
                 return next(new errs.BadGatewayError(err));
             }
