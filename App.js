@@ -42,15 +42,18 @@ class App {
 
         this.app.get("/api/projectList", ProjectList.getProjectList.bind(this, this.database));
         this.app.get("/api/tasksList/:projectId", Tasks.tasksList.bind(this, this.database));
-        this.app.get("/api/tracks/:taskId", Tasks.tracks.bind(this, this.database));
-        this.app.post("/api/addTrack", Tasks.addTrack.bind(this, this.database));
+
+        this.app.get("/api/tracks/:taskId", Tasks.getTracks.bind(this, this.database));
+        this.app.post("/api/track", Tasks.addTrack.bind(this, this.database));
 
         this.app.put("/api/profile", Profile.updateProfile.bind(this, this.database));
         this.app.get("/api/profile", Profile.getProfileData.bind(this, this.database));
+        this.app.post("/api/createTask", Project.createTask.bind(this, this.database));
 
         this.app.get("/api/project/:userId", Project.project.bind(this, this.database));
+
+        // TODO: поправить эти методы
         this.app.post("/api/getUserListByRole", Project.postUserListByRole.bind(this, this.database));
-        this.app.post("/api/createTask", Project.createTask.bind(this, this.database));
     }
 }
 

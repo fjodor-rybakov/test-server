@@ -15,11 +15,13 @@ export class Tasks {
             });
     }
 
-    static tracks(database, req, res, next) {
-        authorization(req, res, next);
+    static getTracks(database, req, res, next) {
+        const dataUser = authorization(req, res, next);
+        const id_user = dataUser.id_user;
         const taskId = req.params.taskId;
         getTracks(database, next, taskId)
             .then((data) => {
+                data.id_user = id_user;
                 res.send(data);
             })
             .catch(() => {
@@ -28,7 +30,8 @@ export class Tasks {
     }
 
     static addTrack(database, req, res, next) {
-        const data = JSON.parse(req.body);
+        authorization(req, res, next);
+        const data = req.body;
         addTrack(database, next, data)
             .then((data) => {
                 res.send(data);

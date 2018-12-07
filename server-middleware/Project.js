@@ -26,7 +26,8 @@ export class Project {
     }
 
     static async createTask(database, req, res, next) {
-        const data = JSON.parse(req.body);
+        authorization(req, res, next);
+        const data = req.body;
         await createTaskImpl(database, next, data.data)
             .then((result) => {
                 addTaskTeam(database, next, data.data.developers, result[0].id)
