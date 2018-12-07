@@ -6,7 +6,7 @@ import * as jwt from "jsonwebtoken";
 
 export class SignIn {
     static postSignIn(database, req, res, next) {
-        const data = JSON.parse(req.body);
+        const data = req.body;
         if (!Utils.isset(data.email, data.password)) {
             return next(new errs.InvalidArgumentError("Not enough body data"));
         }

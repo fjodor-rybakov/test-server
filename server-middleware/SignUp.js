@@ -4,7 +4,7 @@ import * as errs from "restify-errors";
 
 export class SignUp {
     static postSignUp(database, req, res, next) {
-        const data = JSON.parse(req.body);
+        const data = req.body;
         if (!Utils.isset(data.email, data.password)) {
             return next(new errs.InvalidArgumentError("Not enough body data"));
         }
