@@ -7,7 +7,7 @@ import config from "../config";
 import fs from "fs";
 
 export class Profile {
-    static postProfileData(database, req, res, next) {
+    static getProfileData(database, req, res, next) {
         const token = req.headers["x-guide-key"];
         if (!Utils.isset(token)) {
             return next(new errs.InvalidArgumentError("Not enough body data"));
@@ -40,7 +40,7 @@ export class Profile {
             });
     }
 
-    static async postUpdateProfile(database, req, res, next) {
+    static async updateProfile(database, req, res, next) {
         const token = req.headers["x-guide-key"];
         if (!Utils.isset(token)) {
             return next(new errs.InvalidArgumentError("Not enough body data"));

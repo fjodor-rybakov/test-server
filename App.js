@@ -27,7 +27,6 @@ class App {
             origins: ["http://localhost:3000"],
             allowHeaders: ["x-guide-key"]
         });
-
         this.app.use(restify.plugins.acceptParser(this.app.acceptable));
         this.app.use(restify.plugins.queryParser());
         this.app.use(restify.plugins.bodyParser());
@@ -38,18 +37,18 @@ class App {
     }
 
     initRoutes() {
-        this.app.post("/api/signIn", SignIn.postSignIn.bind(this, this.database));
-        this.app.post("/api/signUp", SignUp.postSignUp.bind(this, this.database));
+        this.app.post("/api/signIn", SignIn.signIn.bind(this, this.database));
+        this.app.post("/api/signUp", SignUp.singUp.bind(this, this.database));
 
         this.app.get("/api/projectList", ProjectList.getProjectList.bind(this, this.database));
         this.app.post("/api/getTasksList", Tasks.getTasksList.bind(this, this.database));
         this.app.post("/api/getTracks", Tasks.getTracks.bind(this, this.database));
         this.app.post("/api/addTrack", Tasks.addTrack.bind(this, this.database));
 
-        this.app.put("/api/profile", Profile.postUpdateProfile.bind(this, this.database));
-        this.app.get("/api/profile", Profile.postProfileData.bind(this, this.database));
+        this.app.put("/api/profile", Profile.updateProfile.bind(this, this.database));
+        this.app.get("/api/profile", Profile.getProfileData.bind(this, this.database));
 
-        this.app.post("/api/project", Project.postProject.bind(this, this.database));
+        this.app.post("/api/project", Project.project.bind(this, this.database));
         this.app.post("/api/getUserListByRole", Project.postUserListByRole.bind(this, this.database));
         this.app.post("/api/createTask", Project.createTask.bind(this, this.database));
     }

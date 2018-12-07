@@ -3,7 +3,7 @@ import {addUser} from "../request-database/addUser";
 import * as errs from "restify-errors";
 
 export class SignUp {
-    static postSignUp(database, req, res, next) {
+    static singUp(database, req, res, next) {
         const data = req.body;
         if (!Utils.isset(data.email, data.password)) {
             return next(new errs.InvalidArgumentError("Not enough body data"));
