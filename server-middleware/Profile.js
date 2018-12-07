@@ -2,22 +2,12 @@ import Utils from "../utils/Utils";
 import {updateProfile} from "../request-database/updateProfile";
 import * as errs from "restify-errors";
 import {getProfile} from "../request-database/getProfile";
-import * as jwt from "jsonwebtoken";
-import config from "../config";
 import fs from "fs";
+import {authorization} from "../utils/authorization";
 
 export class Profile {
     static getProfileData(database, req, res, next) {
-        const token = req.headers["x-guide-key"];
-        if (!Utils.isset(token)) {
-            return next(new errs.InvalidArgumentError("Not enough body data"));
-        }
-        let dataUser;
-        try {
-            dataUser = jwt.verify(token, config.jwt.secret);
-        } catch (e) {
-            return next(new errs.GoneError("token expired"));
-        }
+        const dataUser = authorization(req, res, next);
         const id_user = dataUser.id_user;
         getProfile(database, id_user, next)
             .then((data) => {
@@ -41,16 +31,8 @@ export class Profile {
     }
 
     static async updateProfile(database, req, res, next) {
-        const token = req.headers["x-guide-key"];
-        if (!Utils.isset(token)) {
-            return next(new errs.InvalidArgumentError("Not enough body data"));
-        }
+        authorization(req, res, next);
         const data = req.body;
-        try {
-            jwt.verify(token, config.jwt.secret);
-        } catch (e) {
-            return next(new errs.GoneError("token expired"));
-        }
         if (!Utils.isset(data)) {
             return next(new errs.InvalidArgumentError("Not enough body data"));
         }
