@@ -6,14 +6,12 @@ import {ProjectList} from "./server-middleware/ProjectList";
 import {Project} from "./server-middleware/Project";
 import {Tasks} from "./server-middleware/Tasks";
 import {Profile} from "./server-middleware/Profile";
-import {Authorization} from "./utils/Authorization";
-
-const corsMiddleware = require('restify-cors-middleware')
+const corsMiddleware = require('restify-cors-middleware');
 
 class App {
     app;
     database;
-    profileData
+
     constructor() {
         this.app = restify.createServer({
             name: config.name,
@@ -40,17 +38,16 @@ class App {
     }
 
     initRoutes() {
-        this.app.post("/api/checkAuthorization", Authorization);
         this.app.post("/api/signIn", SignIn.postSignIn.bind(this, this.database));
         this.app.post("/api/signUp", SignUp.postSignUp.bind(this, this.database));
 
-        this.app.get("/api/getProjects", ProjectList.getProjectList.bind(this, this.database));
+        this.app.get("/api/projectList", ProjectList.getProjectList.bind(this, this.database));
         this.app.post("/api/getTasksList", Tasks.getTasksList.bind(this, this.database));
         this.app.post("/api/getTracks", Tasks.getTracks.bind(this, this.database));
         this.app.post("/api/addTrack", Tasks.addTrack.bind(this, this.database));
 
-        this.app.post("/api/updateProfile", Profile.postUpdateProfile.bind(this, this.database));
-        this.app.get("/api/profileData", Profile.postProfileData.bind(this, this.database));
+        this.app.put("/api/profile", Profile.postUpdateProfile.bind(this, this.database));
+        this.app.get("/api/profile", Profile.postProfileData.bind(this, this.database));
 
         this.app.post("/api/getProject", Project.postProject.bind(this, this.database));
         this.app.post("/api/getUserListByRole", Project.postUserListByRole.bind(this, this.database));
