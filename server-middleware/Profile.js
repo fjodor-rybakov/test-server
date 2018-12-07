@@ -8,15 +8,14 @@ import fs from "fs";
 
 export class Profile {
     static postProfileData(database, req, res, next) {
-        console.log(req.headers);
-        res.send(req.headers);
-        /*const data = req.body;
-        if (!Utils.isset(data.token)) {
+        const token = req.headers["x-guide-key"];
+        console.log("token", token);
+        if (!Utils.isset(token)) {
             return next(new errs.InvalidArgumentError("Not enough body data"));
         }
         let dataUser;
         try {
-            dataUser = jwt.verify(data.token, config.jwt.secret);
+            dataUser = jwt.verify(token, config.jwt.secret);
         } catch (e) {
             return next(new errs.GoneError("token expired"));
         }
@@ -39,7 +38,7 @@ export class Profile {
             })
             .catch(() => {
                 res.send("err");
-            });*/
+            });
     }
 
     static async postUpdateProfile(database, req, res, next) {

@@ -13,7 +13,7 @@ const corsMiddleware = require('restify-cors-middleware')
 class App {
     app;
     database;
-
+    profileData
     constructor() {
         this.app = restify.createServer({
             name: config.name,
@@ -26,6 +26,7 @@ class App {
 
     setSettings() {
         const cors = corsMiddleware({
+            origins: ["http://localhost:3000"],
             allowHeaders: ["x-guide-key"]
         });
 
@@ -49,7 +50,7 @@ class App {
         this.app.post("/api/addTrack", Tasks.addTrack.bind(this, this.database));
 
         this.app.post("/api/updateProfile", Profile.postUpdateProfile.bind(this, this.database));
-        this.app.post("/api/profileData", Profile.postProfileData.bind(this, this.database));
+        this.app.get("/api/profileData", Profile.postProfileData.bind(this, this.database));
 
         this.app.post("/api/getProject", Project.postProject.bind(this, this.database));
         this.app.post("/api/getUserListByRole", Project.postUserListByRole.bind(this, this.database));
