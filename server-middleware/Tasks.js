@@ -5,8 +5,8 @@ import {authorization} from "../utils/authorization";
 export class Tasks {
     static tasksList(database, req, res, next) {
         authorization(req, res, next);
-        const data = req.body;
-        getTasksList(database, next, data)
+        const projectId = req.params.projectId;
+        getTasksList(database, next, projectId)
             .then((data) => {
                 res.send(data);
             })

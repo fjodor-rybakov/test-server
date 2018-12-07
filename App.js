@@ -41,7 +41,7 @@ class App {
         this.app.post("/api/signUp", SignUp.singUp.bind(this, this.database));
 
         this.app.get("/api/projectList", ProjectList.getProjectList.bind(this, this.database));
-        this.app.post("/api/tasksList", Tasks.tasksList.bind(this, this.database));
+        this.app.get("/api/tasksList/:projectId", Tasks.tasksList.bind(this, this.database));
         this.app.get("/api/tracks/:taskId", Tasks.tracks.bind(this, this.database));
         this.app.post("/api/addTrack", Tasks.addTrack.bind(this, this.database));
 
