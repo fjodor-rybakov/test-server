@@ -8,6 +8,8 @@ import {Tasks} from "./server-middleware/Tasks";
 import {Profile} from "./server-middleware/Profile";
 import {Authorization} from "./utils/Authorization";
 
+const corsMiddleware = require('restify-cors-middleware')
+
 class App {
     app;
     database;
@@ -23,15 +25,17 @@ class App {
     }
 
     setSettings() {
+        const cors = corsMiddleware({
+            allowHeaders: ["x-guide-key"]
+        });
+
         this.app.use(restify.plugins.acceptParser(this.app.acceptable));
         this.app.use(restify.plugins.queryParser());
         this.app.use(restify.plugins.bodyParser());
         this.app.use(restify.plugins.authorizationParser());
         this.app.use(restify.plugins.multipartBodyParser());
-        this.app.use((req, res, next) => {
-            res.header("Access-Control-Allow-Origin", "http://localhost:3000");
-            next();
-        });
+        this.app.pre(cors.preflight);
+        this.app.use(cors.actual);
     }
 
     initRoutes() {

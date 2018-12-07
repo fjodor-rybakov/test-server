@@ -17,7 +17,7 @@ export class SignIn {
                     id_role: dataUser[0].id_role
                 };
                 let token = jwt.sign(newDataUser, config.jwt.secret, {
-                    expiresIn: '5m'
+                    expiresIn: '60m'
                 });
                 console.log(jwt.decode(token));
                 let {exp, id_user, id_role} = jwt.decode(token);

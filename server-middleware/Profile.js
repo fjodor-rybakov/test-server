@@ -8,7 +8,9 @@ import fs from "fs";
 
 export class Profile {
     static postProfileData(database, req, res, next) {
-        const data = JSON.parse(req.body);
+        console.log(req.headers);
+        res.send(req.headers);
+        /*const data = req.body;
         if (!Utils.isset(data.token)) {
             return next(new errs.InvalidArgumentError("Not enough body data"));
         }
@@ -37,7 +39,7 @@ export class Profile {
             })
             .catch(() => {
                 res.send("err");
-            });
+            });*/
     }
 
     static async postUpdateProfile(database, req, res, next) {
