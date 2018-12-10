@@ -49,8 +49,10 @@ class App {
         this.app.put("/api/profile", Profile.updateProfile.bind(this, this.database));
         this.app.get("/api/profile", Profile.getProfileData.bind(this, this.database));
         this.app.post("/api/createTask", Project.createTask.bind(this, this.database));
+        this.app.post("/api/createProject", Project.createProject.bind(this, this.database));
 
         this.app.get("/api/project/:userId", Project.project.bind(this, this.database));
+        this.app.get("/api/getProjectTypes", Project.getProjectTypes.bind(this, this.database));
 
         // TODO: поправить эти методы
         this.app.post("/api/getUserListByRole", Project.postUserListByRole.bind(this, this.database));
