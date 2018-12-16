@@ -1,4 +1,5 @@
-import mysql from "mysql";
+import mysql from "mysql"
+const Cryptr = require('cryptr');
 
 const config = {
     name: 'order task',
@@ -14,7 +15,8 @@ const config = {
     },
     "jwt": {
         "secret": "&@$!changeme!$@&"
-    }
+    },
+    crypt: new Cryptr("Qw123o@!f")
 };
 
 export default config;
