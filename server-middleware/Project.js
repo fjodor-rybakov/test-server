@@ -12,9 +12,6 @@ export class Project {
         getProject(database, userId, next)
             .then((data) => {
                 res.send(data);
-            })
-            .catch((err) => {
-                res.send(err);
             });
     }
     static async getProjectTypes(database, req, res, next) {

@@ -11,9 +11,6 @@ export class SignUp {
         addUser(database, data, next)
             .then(() => {
                 res.send("success");
-            })
-            .catch(() => {
-                res.send("email is already exist");
             });
     }
 }

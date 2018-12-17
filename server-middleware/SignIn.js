@@ -17,14 +17,11 @@ export class SignIn {
                     id_role: dataUser[0].id_role
                 };
                 let token = jwt.sign(newDataUser, config.jwt.secret, {
-                    expiresIn: '60m'
+                    expiresIn: config.leaveTimeToken
                 });
                 console.log(jwt.decode(token));
                 let {exp, id_user, id_role} = jwt.decode(token);
                 res.send({exp, token})
-            })
-            .catch(() => {
-                return next(new errs.InvalidArgumentError("Unknown user"));
             });
     }
 }

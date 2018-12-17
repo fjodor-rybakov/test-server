@@ -7,9 +7,6 @@ export class ProjectList {
         getProjects(database, next)
             .then((data) => {
                 res.send(data);
-            })
-            .catch(() => {
-                res.send("err");
             });
     }
 }

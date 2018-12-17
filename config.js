@@ -16,7 +16,10 @@ const config = {
     "jwt": {
         "secret": "&@$!changeme!$@&"
     },
-    crypt: new Cryptr("Qw123o@!f")
+    crypt: new Cryptr("Qw123o@!f"),
+    leaveTimeToken: "60m",
+    originUrls: ["http://localhost:3000"],
+    allowHeaders: ["x-guide-key"],
 };
 
 export default config;

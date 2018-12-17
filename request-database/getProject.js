@@ -1,14 +1,14 @@
 import * as errs from "restify-errors";
 
 export function getProject(database, userId, next) {
-    return new Promise(async (resolve, reject) => {
+    return new Promise(async (resolve) => {
         let sql = `SELECT * FROM project WHERE id_project = ?`;
-        await database.query(sql, [userId], function (err, result) {
+        await database.query(sql, [userId], (err, result) => {
             if (err) {
                 return next(new errs.BadGatewayError(err));
             }
             if (result.length === 0) {
-                return reject(undefined);
+                return next(new errs.BadRequestError("Project not found"));
             } else {
                 return resolve(result[0]);
             }
@@ -23,7 +23,7 @@ export function getUserListByRole(database, next, role) {
                     LEFT JOIN user 
                     on user.id_role = role.id_role
                     where role.name = ?`;
-        await database.query(sql, [role], function (err, result) {
+        await database.query(sql, [role], (err, result) => {
             if (err) {
                 return next(new errs.BadGatewayError(err));
             }
@@ -35,7 +35,7 @@ export function getUserListByRole(database, next, role) {
 export function getProjectTypesImpl(database, next) {
     return new Promise(async (resolve) => {
         let sql = `SELECT * FROM project_type`;
-        await database.query(sql, function (err, res) {
+        await database.query(sql, (err, res) => {
             if (err) {
                 return next(new errs.BadGatewayError(err));
             }
@@ -45,15 +45,16 @@ export function getProjectTypesImpl(database, next) {
 }
 
 export function createTaskImpl(database, next, data) {
-    return new Promise(async () => {
+    return new Promise(async (resolve) => {
         let sql = `INSERT INTO task VALUES 
         (null, ?, ?, ?, ?, ?)`;
         console.log(sql);
         const newData = [data.id_project, data.id_user_manager, data.description, data.time, data.title];
-        await database.query(sql, newData, function (err) {
+        await database.query(sql, newData, (err) => {
             if (err) {
                 return next(new errs.BadGatewayError(err));
             }
+            return resolve();
         })
     })
 }
@@ -63,7 +64,7 @@ export function createProjectImpl(database, next, data) {
         let sql = `INSERT INTO project VALUES 
         (null, ?, ${data.id_project_type}, ${data.id_user_client}, 'open', ?, ${data.is_private}, ${data.id_user_manager})`;
         const params = [data.description, data.title];
-        await database.query(sql, params, function (err) {
+        await database.query(sql, params, (err) => {
             if (err) {
                 return next(new errs.BadGatewayError(err))
             }
@@ -78,7 +79,7 @@ export function addProjectTeam(database, next, developers, id) {
         for (let i = 0; i < developers.length; i++) {
             let sql = `INSERT INTO project_and_user VALUES 
             (null, ?, ?)`;
-            await database.query(sql, [developers[i].id_user, id], function (err, result) {
+            await database.query(sql, [developers[i].id_user, id], (err, result) => {
                 if (err) {
                     return next(new errs.BadGatewayError(err));
                 }
@@ -109,7 +110,7 @@ export function addTaskTeam(database, next, developers, id) {
             let sql = `INSERT INTO task_and_user VALUES 
             (null, ?, ?)`;
             console.log(sql);
-            await database.query(sql, [id, developers[i].id_user], function (err, result) {
+            await database.query(sql, [id, developers[i].id_user], (err, result) => {
                 if (err) {
                     return next(new errs.BadGatewayError(err));
                 }

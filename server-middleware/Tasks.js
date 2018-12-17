@@ -9,9 +9,6 @@ export class Tasks {
         getTasksList(database, next, projectId)
             .then((data) => {
                 res.send(data);
-            })
-            .catch(() => {
-                res.send("err");
             });
     }
 
@@ -23,9 +20,6 @@ export class Tasks {
             .then((data) => {
                 data.id_user = id_user;
                 res.send(data);
-            })
-            .catch(() => {
-                res.send("err");
             });
     }
 
@@ -35,9 +29,6 @@ export class Tasks {
         addTrack(database, next, data)
             .then((data) => {
                 res.send(data);
-            })
-            .catch(() => {
-                res.send("err");
             });
     }
 }

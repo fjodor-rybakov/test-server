@@ -24,8 +24,8 @@ class App {
 
     setSettings() {
         const cors = corsMiddleware({
-            origins: ["http://localhost:3000"],
-            allowHeaders: ["x-guide-key"]
+            origins: config.originUrls,
+            allowHeaders: config.allowHeaders
         });
         this.app.use(restify.plugins.acceptParser(this.app.acceptable));
         this.app.use(restify.plugins.queryParser());
@@ -54,7 +54,6 @@ class App {
         this.app.get("/api/project/:userId", Project.project.bind(this, this.database));
         this.app.get("/api/getProjectTypes", Project.getProjectTypes.bind(this, this.database));
 
-        // TODO: поправить эти методы
         this.app.post("/api/getUserListByRole", Project.postUserListByRole.bind(this, this.database));
     }
 }

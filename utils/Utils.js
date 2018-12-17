@@ -1,13 +1,12 @@
 export default class Utils {
     static isset() {
-        const a = arguments, l = a.length;
         let i = 0;
-        if (l === 0) {
-            console.log('Empty isset');
+        if (arguments.length === 0) {
+            console.log("Empty isset");
         }
 
-        while (i !== l) {
-            if (typeof(a[i]) === 'undefined' || a[i] === null) {
+        while (i !== arguments.length) {
+            if (typeof(arguments[i]) === "undefined" || arguments[i] === null || arguments[i].trim() === "") {
                 return false;
             } else {
                 i++;

@@ -11,7 +11,6 @@ export class Profile {
         const id_user = dataUser.id_user;
         getProfile(database, id_user, next)
             .then((data) => {
-                console.log(data[0]);
                 if (data[0].photo === "") {
                     res.send(data[0]);
                 }
@@ -24,9 +23,6 @@ export class Profile {
                             res.send(newData);
                         });
                     });
-            })
-            .catch(() => {
-                res.send("err");
             });
     }
 
@@ -40,7 +36,7 @@ export class Profile {
         const base64Data = data.photo.replace(/^data:image\/png;base64,/, "");
         let path = "resources/photo_" + data.id_user + ".png";
         if (data.photo !== "") {
-            await fs.writeFile(path, base64Data, 'base64', function (err) {
+            await fs.writeFile(path, base64Data, 'base64', (err) => {
                 console.log(err);
             });
         }
@@ -50,7 +46,7 @@ export class Profile {
                 return path = data;
             });
 
-        updateProfile(database, data, path)
+        updateProfile(database, data, path, next)
             .then(() => {
                 res.send("success");
             })
