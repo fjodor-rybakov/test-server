@@ -29,10 +29,6 @@ export class Profile {
     static async updateProfile(database, req, res, next) {
         authorization(req, res, next);
         const data = req.body;
-        if (!Utils.isset(data)) {
-            return next(new errs.InvalidArgumentError("Not enough body data"));
-        }
-
         const base64Data = data.photo.replace(/^data:image\/png;base64,/, "");
         let path = "resources/photo_" + data.id_user + ".png";
         if (data.photo !== "") {

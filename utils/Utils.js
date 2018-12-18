@@ -6,7 +6,10 @@ export default class Utils {
         }
 
         while (i !== arguments.length) {
-            if (typeof(arguments[i]) === "undefined" || arguments[i] === null || arguments[i].trim() === "") {
+            if (typeof arguments[i] === "string" && arguments[i].trim() === "") {
+                return false;
+            }
+            if (typeof(arguments[i]) === "undefined" || arguments[i] === null) {
                 return false;
             } else {
                 i++;
