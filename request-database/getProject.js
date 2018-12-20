@@ -107,9 +107,7 @@ export function addTaskTeam(database, next, developers, id) {
     let res = '';
     return new Promise(async (resolve) => {
         for (let i = 0; i < developers.length; i++) {
-            let sql = `INSERT INTO task_and_user VALUES 
-            (null, ?, ?)`;
-            console.log(sql);
+            let sql = `INSERT INTO task_and_user VALUES (null, ?, ?)`;
             await database.query(sql, [id, developers[i].id_user], (err, result) => {
                 if (err) {
                     return next(new errs.BadGatewayError(err));
