@@ -6,8 +6,8 @@ import {
 import {authorization} from "../utils/authorization";
 
 export class Project {
-    static project(database, req, res, next) {
-        authorization(req, res, next);
+    static async project(database, req, res, next) {
+        await authorization(req, res, next);
         const userId = req.params.userId;
         getProject(database, userId, next)
             .then((data) => {
@@ -15,6 +15,7 @@ export class Project {
             });
     }
     static async getProjectTypes(database, req, res, next) {
+        await authorization(req, res, next);
         getProjectTypesImpl(database, next)
             .then((data) => {
                 console.log(data);
@@ -26,6 +27,7 @@ export class Project {
     }
 
     static async createProject(database, req, res, next) {
+        await authorization(req, res, next);
         const data = req.body;
         createProjectImpl(database, next, data.data)
             .then(async () => {
@@ -55,7 +57,7 @@ export class Project {
     }
 
     static async createTask(database, req, res, next) {
-        authorization(req, res, next);
+        await authorization(req, res, next);
         const data = req.body;
         await createTaskImpl(database, next, data.data)
             .then((result) => {

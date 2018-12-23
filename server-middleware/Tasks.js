@@ -3,8 +3,8 @@ import {getTracks, addTrack} from "../request-database/Tracks";
 import {authorization} from "../utils/authorization";
 
 export class Tasks {
-    static tasksList(database, req, res, next) {
-        authorization(req, res, next);
+    static async tasksList(database, req, res, next) {
+        await authorization(req, res, next);
         const projectId = req.params.projectId;
         getTasksList(database, next, projectId)
             .then((data) => {
@@ -12,8 +12,8 @@ export class Tasks {
             });
     }
 
-    static getTracks(database, req, res, next) {
-        const dataUser = authorization(req, res, next);
+    static async getTracks(database, req, res, next) {
+        const dataUser = await authorization(req, res, next);
         const id_user = dataUser.id_user;
         const taskId = req.params.taskId;
         getTracks(database, next, taskId)
@@ -23,8 +23,8 @@ export class Tasks {
             });
     }
 
-    static addTrack(database, req, res, next) {
-        authorization(req, res, next);
+    static async addTrack(database, req, res, next) {
+        await authorization(req, res, next);
         const data = req.body;
         addTrack(database, next, data)
             .then((data) => {

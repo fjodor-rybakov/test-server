@@ -5,13 +5,15 @@ import Utils from "./Utils";
 
 export function authorization(req, res, next) {
     const token = req.headers["x-guide-key"];
+    console.log("+++++++++++++++", token);
     if (!Utils.isset(token)) {
-        return next(new errs.InvalidArgumentError("Token not found"));
+        next(new errs.InvalidArgumentError("Token not found"));
     }
     try {
-        return jwt.verify(token, config.jwt.secret);
+        const data = jwt.verify(token, config.jwt.secret);
+        return data;
     } catch (e) {
         console.log("token expired");
-        return next(new errs.GoneError("token expired"));
+        next(new errs.GoneError("token expired"));
     }
 }

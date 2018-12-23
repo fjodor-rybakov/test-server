@@ -6,8 +6,8 @@ import fs from "fs";
 import {authorization} from "../utils/authorization";
 
 export class Profile {
-    static getProfileData(database, req, res, next) {
-        const dataUser = authorization(req, res, next);
+    static async getProfileData(database, req, res, next) {
+        const dataUser = await authorization(req, res, next);
         const id_user = dataUser.id_user;
         getProfile(database, id_user, next)
             .then((data) => {
@@ -27,7 +27,7 @@ export class Profile {
     }
 
     static async updateProfile(database, req, res, next) {
-        authorization(req, res, next);
+        await authorization(req, res, next);
         const data = req.body;
         const base64Data = data.photo.replace(/^data:image\/png;base64,/, "");
         let path = "resources/photo_" + data.id_user + ".png";
