@@ -17,6 +17,7 @@
     "cryptr": "^4.0.2",
     "jsonwebtoken": "^8.3.0",
     "mysql": "^2.16.0",
+    "promise-mysql": "^3.3.1",
     "restify": "^7.2.2",
     "restify-cors-middleware": "^1.1.1",
     "restify-errors": "^6.1.1"

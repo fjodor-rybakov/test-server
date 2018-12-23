@@ -1,4 +1,4 @@
-import mysql from "mysql"
+const mysql = require('promise-mysql');
 const Cryptr = require('cryptr');
 
 const config = {
@@ -6,7 +6,7 @@ const config = {
     version: '0.0.1',
     port: process.env.PORT || 3001,
     db: {
-        get: mysql.createConnection({
+        get: mysql.createPool({
             host     : 'localhost',
             user     : 'root',
             password : 'qwerty123',

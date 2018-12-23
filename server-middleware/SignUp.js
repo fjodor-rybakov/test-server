@@ -11,6 +11,9 @@ export class SignUp {
         addUser(database, data, next)
             .then(() => {
                 res.send("success");
+            })
+            .catch((data) => {
+                return next(data);
             });
     }
 }
