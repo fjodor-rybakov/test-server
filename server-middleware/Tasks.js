@@ -1,6 +1,8 @@
 import {getTasksList} from "../request-database/getTasksList";
 import {getTracks, addTrack} from "../request-database/Tracks";
 import {authorization} from "../utils/authorization";
+import Utils from "../utils/Utils";
+import * as errs from "restify-errors";
 
 export class Tasks {
     static async tasksList(database, req, res, next) {
@@ -26,6 +28,9 @@ export class Tasks {
     static async addTrack(database, req, res, next) {
         await authorization(req, res, next);
         const data = req.body;
+        if (!Utils.isset(data.start_time, data.end_time, data.id_task)) {
+            return next(new errs.InvalidArgumentError("Not enough body data"));
+        }
         addTrack(database, next, data)
             .then((data) => {
                 res.send(data);

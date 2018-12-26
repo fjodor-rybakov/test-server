@@ -21,6 +21,7 @@ export function addTrack(database, next, data) {
         let sql = `INSERT INTO track VALUES (null, ${data.id_user}, ?, '${start_data}', '${end_data}', ${data.id_task})`;
         await database.query(sql, [data.description], (err, result) => {
             if (err) {
+                console.log(err);
                 return next(new errs.BadGatewayError(err));
             }
             return resolve(result);
