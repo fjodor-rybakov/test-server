@@ -52,7 +52,7 @@ export function getUserListByRole(database, next, role) {
 export function getProjectTypesImpl(database, next) {
     return new Promise(async (resolve) => {
         let sql = `SELECT * FROM project_type`;
-        await database.query(sql, (err, res) => {
+        database.query(sql, (err, res) => {
             if (err) {
                 return next(new errs.BadGatewayError(err));
             }

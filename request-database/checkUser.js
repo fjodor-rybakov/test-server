@@ -5,7 +5,7 @@ import Utils from "../utils/Utils";
 export function checkUser(database, data, next) {
     return new Promise(async (resolve) => {
         let sql = `SELECT * FROM user WHERE email = ?`;
-        await database.query(sql, [data.email], (err, result) => {
+        database.query(sql, [data.email], (err, result) => {
             if (err) {
                 return next(new errs.BadGatewayError(err));
             }

@@ -3,7 +3,7 @@ import * as errs from "restify-errors";
 export function getTracks(database, next, taskId) {
     return new Promise(async (resolve) => {
         let sql = `SELECT * FROM track WHERE id_task = ?`;
-        await database.query(sql, [taskId], (err, result) => {
+        database.query(sql, [taskId], (err, result) => {
             if (err) {
                 return next(new errs.BadGatewayError(err));
             }
