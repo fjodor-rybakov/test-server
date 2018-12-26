@@ -16,6 +16,23 @@ export function getProject(database, userId, next) {
     })
 }
 
+export function getTaskById(database, id, next) {
+    return new Promise(async (resolve) => {
+        let sql = `SELECT * FROM task WHERE id_task = ?`;
+        await database.query(sql, [id], (err, result) => {
+            if (err) {
+                return next(new errs.BadGatewayError(err));
+            }
+            console.log(id);
+            if (result.length === 0) {
+                return next(new errs.BadRequestError("Task not found"));
+            } else {
+                return resolve(result[0]);
+            }
+        })
+    })
+}
+
 export function getUserListByRole(database, next, role) {
     return new Promise(async (resolve) => {
         let sql = `SELECT user.last_name, user.first_name, user.id_user
@@ -47,7 +64,7 @@ export function getProjectTypesImpl(database, next) {
 export function createTaskImpl(database, next, data) {
     return new Promise(async (resolve) => {
         let sql = `INSERT INTO task VALUES 
-        (null, ?, ?, ?, ?, ?)`;
+        (null, ?, ?, ?, ?, ?, 'open')`;
         console.log(sql);
         const newData = [data.id_project, data.id_user_manager, data.description, data.time, data.title];
         await database.query(sql, newData, (err) => {

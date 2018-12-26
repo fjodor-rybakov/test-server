@@ -1,6 +1,6 @@
 import {
     addProjectTeam,
-    addTaskTeam, createProjectImpl, createTaskImpl, getLastInsertId, getProject, getProjectTypesImpl,
+    addTaskTeam, createProjectImpl, createTaskImpl, getLastInsertId, getProject, getProjectTypesImpl, getTaskById,
     getUserListByRole
 } from "../request-database/getProject";
 import {authorization} from "../utils/authorization";
@@ -10,6 +10,15 @@ export class Project {
         await authorization(req, res, next);
         const userId = req.params.userId;
         getProject(database, userId, next)
+            .then((data) => {
+                res.send(data);
+            });
+    }
+
+    static async getTask(database, req, res, next) {
+        await authorization(req, res, next);
+        const id = req.params.taskId;
+        getTaskById(database, id, next)
             .then((data) => {
                 res.send(data);
             });

@@ -16,7 +16,7 @@ export class Tasks {
         const dataUser = await authorization(req, res, next);
         const id_user = dataUser.id_user;
         const taskId = req.params.taskId;
-        getTracks(database, next, taskId)
+        await getTracks(database, next, taskId)
             .then((data) => {
                 data.id_user = id_user;
                 res.send(data);
