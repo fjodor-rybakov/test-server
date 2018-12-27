@@ -20,8 +20,11 @@ export class Tasks {
         const taskId = req.params.taskId;
         await getTracks(database, next, taskId)
             .then((data) => {
-                data.id_user = id_user;
-                res.send(data);
+                const newData = {
+                    id_user: id_user,
+                    tracks: data
+                };
+                res.send(newData);
             });
     }
 
