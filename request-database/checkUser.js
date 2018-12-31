@@ -1,5 +1,4 @@
 import * as errs from "restify-errors";
-import config from "../config";
 import Utils from "../utils/Utils";
 
 export function checkUser(database, data, next) {

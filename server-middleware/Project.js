@@ -40,15 +40,17 @@ export class Project {
         await authorization(req, res, next);
         const data = req.body;
         console.log(data);
-        createProjectImpl(database, next, data.data)
-            .then(async () => {
-                const id = await getLastInsertId(database, next);
-                addProjectTeam(database, next, data.data.developers, id)
-                    .then((data) => {
-                        res.send( {success: true, data: data} );
-                    })
-                    .catch((err) => {
-                        res.send( {success: false, data: err} );
+        await createProjectImpl(database, next, data.data)
+            .then(() => {
+                getLastInsertId(database, next)
+                    .then((project_id) => {
+                        addProjectTeam(database, next, data.data.developers, project_id)
+                            .then((data) => {
+                                res.send( {success: true, data: data} );
+                            })
+                            .catch((err) => {
+                                res.send( {success: false, data: err} );
+                            });
                     });
             })
             .catch((err) => {
@@ -71,7 +73,7 @@ export class Project {
         await authorization(req, res, next);
         const data = req.body;
         await createTaskImpl(database, next, data.data)
-            .then((result) => {
+            .then(() => {
                 addTaskTeam(database, next, data.data.developers, getLastInsertId(database, next))
                     .then((data) => {
                         res.send( {success: true, data: data} );

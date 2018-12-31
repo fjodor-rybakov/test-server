@@ -20,7 +20,7 @@ export class SignIn {
                     expiresIn: config.leaveTimeToken
                 });
                 console.log(jwt.decode(token));
-                let {exp, id_user, id_role} = jwt.decode(token);
+                let {exp} = jwt.decode(token);
                 res.send({exp, token})
             });
     }

@@ -3,7 +3,7 @@ import * as errs from "restify-errors";
 export function getProject(database, userId, next) {
     return new Promise(async (resolve) => {
         let sql = `SELECT * FROM project WHERE id_project = ?`;
-        await database.query(sql, [userId], (err, result) => {
+        database.query(sql, [userId], (err, result) => {
             if (err) {
                 return next(new errs.BadGatewayError(err));
             }
@@ -77,11 +77,11 @@ export function createTaskImpl(database, next, data) {
 }
 
 export function createProjectImpl(database, next, data) {
-    return new Promise(async (resolve) => {
+    return new Promise((resolve) => {
         let sql = `INSERT INTO project VALUES 
         (null, ?, ${data.id_project_type}, ${data.id_user_client}, 'open', ?, ${data.is_private}, ${data.id_user_manager})`;
         const params = [data.description, data.title];
-        await database.query(sql, params, (err) => {
+        database.query(sql, params, (err) => {
             if (err) {
                 return next(new errs.BadGatewayError(err))
             }
@@ -90,14 +90,16 @@ export function createProjectImpl(database, next, data) {
     })
 }
 
-export function addProjectTeam(database, next, developers, id) {
+export function addProjectTeam(database, next, developers, project_id) {
     let res = '';
     return new Promise(async (resolve) => {
         for (let i = 0; i < developers.length; i++) {
+            console.log(developers[i].id_user, project_id);
             let sql = `INSERT INTO project_and_user VALUES 
             (null, ?, ?)`;
-            await database.query(sql, [developers[i].id_user, id], (err, result) => {
+            await database.query(sql, [developers[i].id_user, project_id], (err, result) => {
                 if (err) {
+                    console.log(err);
                     return next(new errs.BadGatewayError(err));
                 }
                 res = result;
@@ -110,7 +112,7 @@ export function addProjectTeam(database, next, developers, id) {
 export function getLastInsertId(database, next) {
     return new Promise(async (resolve) => {
         const sql = `SELECT last_insert_id() as id`;
-        database.query(sql, function (err, result) {
+        await database.query(sql, function (err, result) {
             if (err) {
                 return next(new errs.BadGatewayError(err));
             }
