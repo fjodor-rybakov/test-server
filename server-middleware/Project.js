@@ -24,6 +24,7 @@ export class Project {
                 res.send(data);
             });
     }
+
     static async getProjectTypes(database, req, res, next) {
         await authorization(req, res, next);
         getProjectTypesImpl(database, next)
@@ -41,20 +42,17 @@ export class Project {
         const data = req.body;
         console.log(data);
         await createProjectImpl(database, next, data.data)
-            .then(() => {
-                getLastInsertId(database, next)
-                    .then((project_id) => {
-                        addProjectTeam(database, next, data.data.developers, project_id)
-                            .then((data) => {
-                                res.send( {success: true, data: data} );
-                            })
-                            .catch((err) => {
-                                res.send( {success: false, data: err} );
-                            });
+            .then((id) => {
+                addProjectTeam(database, next, data.data.developers, id)
+                    .then((data) => {
+                        res.send({success: true, data: data});
+                    })
+                    .catch((err) => {
+                        res.send({success: false, data: err});
                     });
             })
             .catch((err) => {
-                res.send( {success: false, data: err} );
+                res.send({success: false, data: err});
             });
     }
 
@@ -76,14 +74,14 @@ export class Project {
             .then(() => {
                 addTaskTeam(database, next, data.data.developers, getLastInsertId(database, next))
                     .then((data) => {
-                        res.send( {success: true, data: data} );
+                        res.send({success: true, data: data});
                     })
                     .catch((err) => {
-                        res.send( {success: false, data: err} );
+                        res.send({success: false, data: err});
                     });
             })
             .catch((err) => {
-                res.send( {success: false, data: err} );
+                res.send({success: false, data: err});
             });
     }
 }

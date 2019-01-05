@@ -81,11 +81,11 @@ export function createProjectImpl(database, next, data) {
         let sql = `INSERT INTO project VALUES 
         (null, ?, ${data.id_project_type}, ${data.id_user_client}, 'open', ?, ${data.is_private}, ${data.id_user_manager})`;
         const params = [data.description, data.title];
-        database.query(sql, params, (err) => {
+        database.query(sql, params, (err, result) => {
             if (err) {
                 return next(new errs.BadGatewayError(err))
             }
-            return resolve();
+            return resolve(result.insertId);
         })
     })
 }
