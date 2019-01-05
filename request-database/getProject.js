@@ -98,7 +98,7 @@ export function addProjectTeam(database, next, developers, project_id) {
             console.log(developers[i].id_user, project_id);
             let sql = `INSERT INTO project_and_user VALUES 
             (null, ?, ?)`;
-            await database.query(sql, [developers[i].id_user, project_id], (err, result) => {
+            database.query(sql, [developers[i].id_user, project_id], (err, result) => {
                 if (err) {
                     return next(new errs.BadGatewayError(err));
                 }
