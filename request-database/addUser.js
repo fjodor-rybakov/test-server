@@ -14,8 +14,8 @@ export function addUser(database, data, next) {
         });
 
         sql = `INSERT INTO user VALUES 
-        (null, '', '', 1, '', ?, ?, 'resources/default-avatar.png')`;
-        database.query(sql, [config.crypt.encrypt(data.password), data.email], (err) => {
+        (null, '', '', ?, '', ?, ?, 'resources/default-avatar.png')`;
+        database.query(sql, [data.role, config.crypt.encrypt(data.password), data.email], (err) => {
             if (err) {
                 return next(new errs.BadGatewayError(err));
             }

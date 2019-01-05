@@ -4,6 +4,7 @@ import {SignIn} from "./server-middleware/SignIn";
 import {SignUp} from "./server-middleware/SignUp";
 import {ProjectList} from "./server-middleware/ProjectList";
 import {Project} from "./server-middleware/Project";
+import {Permission} from "./server-middleware/Permission";
 import {Tasks} from "./server-middleware/Tasks";
 import {Profile} from "./server-middleware/Profile";
 const corsMiddleware = require('restify-cors-middleware');
@@ -54,8 +55,15 @@ class App {
         this.app.get("/api/project/:userId", Project.project.bind(this, this.database));
         this.app.get("/api/task/:taskId", Project.getTask.bind(this, this.database));
         this.app.get("/api/getProjectTypes", Project.getProjectTypes.bind(this, this.database));
+        this.app.get("/api/getInfo", Profile.getInfo.bind(this, this.database));
+        this.app.get("/api/getRoles", Profile.getRoles.bind(this, this.database));
 
         this.app.post("/api/getUserListByRole", Project.postUserListByRole.bind(this, this.database));
+
+        //get permissions
+        this.app.get("/api/createProject/getPermission", Permission.CreateProjectPermission.bind(this, this.database));
+        this.app.get("/api/createTrack/getPermission/:taskId", Permission.CreateTrackPermission.bind(this, this.database));
+        this.app.get("/api/createTask/getPermission/:projectId", Permission.CreateTaskPermission.bind(this, this.database));
     }
 }
 

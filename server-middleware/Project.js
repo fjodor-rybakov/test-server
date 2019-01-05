@@ -8,7 +8,6 @@ import {authorization} from "../utils/authorization";
 export class Project {
     static async project(database, req, res, next) {
         await authorization(req, res, next);
-        console.log(res.body);
         const userId = req.params.userId;
         getProject(database, userId, next)
             .then((data) => {
@@ -40,7 +39,6 @@ export class Project {
     static async createProject(database, req, res, next) {
         await authorization(req, res, next);
         const data = req.body;
-        console.log(data);
         await createProjectImpl(database, next, data.data)
             .then((id) => {
                 addProjectTeam(database, next, data.data.developers, id)
@@ -71,8 +69,8 @@ export class Project {
         await authorization(req, res, next);
         const data = req.body;
         await createTaskImpl(database, next, data.data)
-            .then(() => {
-                addTaskTeam(database, next, data.data.developers, getLastInsertId(database, next))
+            .then((id) => {
+                addTaskTeam(database, next, data.data.developers, id)
                     .then((data) => {
                         res.send({success: true, data: data});
                     })

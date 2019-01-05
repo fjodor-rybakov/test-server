@@ -65,13 +65,13 @@ export function createTaskImpl(database, next, data) {
     return new Promise(async (resolve) => {
         let sql = `INSERT INTO task VALUES 
         (null, ?, ?, ?, ?, ?, 'open')`;
-        console.log(sql);
+        console.log(data);
         const newData = [data.id_project, data.id_user_manager, data.description, data.time, data.title];
-        await database.query(sql, newData, (err) => {
+        await database.query(sql, newData, (err, res) => {
             if (err) {
                 return next(new errs.BadGatewayError(err));
             }
-            return resolve();
+            return resolve(res.insertId);
         })
     })
 }
@@ -94,12 +94,12 @@ export function addProjectTeam(database, next, developers, project_id) {
     let res = '';
     return new Promise(async (resolve) => {
         for (let i = 0; i < developers.length; i++) {
+            console.log(i);
             console.log(developers[i].id_user, project_id);
             let sql = `INSERT INTO project_and_user VALUES 
             (null, ?, ?)`;
             await database.query(sql, [developers[i].id_user, project_id], (err, result) => {
                 if (err) {
-                    console.log(err);
                     return next(new errs.BadGatewayError(err));
                 }
                 res = result;
