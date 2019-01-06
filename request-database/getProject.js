@@ -221,3 +221,50 @@ export function addTaskTeam(database, next, developers, id) {
         return resolve(res);
     })
 }
+
+export function deleteTask(database, taskId, next) {
+    return new Promise(resolve => {
+        let sql = `DELETE FROM task_and_user WHERE id_task = ?`;
+        database.query(sql, [taskId], (err) => {
+            if (err) {
+                return next(new errs.BadGatewayError(err));
+            }
+        });
+
+        sql = `DELETE FROM task WHERE id_task = ?`;
+        database.query(sql, [taskId], (err) => {
+            if (err) {
+                return next(new errs.BadGatewayError(err));
+            }
+            return resolve();
+        });
+    });
+}
+
+export function updateTask(database, taskId, data, next) {
+    return new Promise(resolve => {
+        let sql = `UPDATE task SET 
+                          id_project = ?,
+                          id_user_manager = ?,
+                          description = ?,
+                          time = ?,
+                          title = ?
+                          status = ?
+                   WHERE id_task = ?`;
+        const options = [
+            data.id_project,
+            data.id_user_manager,
+            data.description,
+            data.time,
+            data.title,
+            data.status,
+            taskId
+        ];
+        database.query(sql, options, (err) => {
+            if (err) {
+                return next(new errs.BadGatewayError(err));
+            }
+            return resolve();
+        })
+    });
+}
