@@ -62,6 +62,7 @@ class App {
         this.app.get("/api/getRoles", Profile.getRoles.bind(this, this.database));
 
         this.app.post("/api/getUserListByRole", Project.postUserListByRole.bind(this, this.database));
+        this.app.get("/api/project/getMostPopular", Project.getPopular.bind(this, this.database));
 
         //get permissions
         this.app.get("/api/createProject/getPermission", Permission.CreateProjectPermission.bind(this, this.database));
