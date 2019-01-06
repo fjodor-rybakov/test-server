@@ -50,24 +50,20 @@ class App {
         this.app.put("/api/profile", Profile.updateProfile.bind(this, this.database));
         this.app.get("/api/profile", Profile.getProfileData.bind(this, this.database));
 
-        // Проекты
         this.app.get("/api/project/:userId", Project.project.bind(this, this.database));
-        this.app.post("/api/createProject", Project.createProject.bind(this, this.database));
         this.app.put("/api/project/:projectId", Project.updateProject.bind(this, this.database));
+        this.app.post("/api/createProject", Project.createProject.bind(this, this.database));
         this.app.del("/api/project/:projectId", Project.deleteProject.bind(this, this.database));
         this.app.get("/api/project/getMostPopular", Project.getPopular.bind(this, this.database));
 
-        // Таски
-        this.app.get("/api/task/:taskId", Project.getTask.bind(this, this.database));
         this.app.post("/api/createTask", Project.createTask.bind(this, this.database));
-        this.app.put("/api/task/:taskId", Project.updateTask.bind(this, this.database));
-        this.app.del("/api/task/:taskId", Project.deleteTask.bind(this, this.database));
-
+        this.app.get("/api/task/:taskId", Project.getTask.bind(this, this.database));
         this.app.get("/api/getProjectTypes", Project.getProjectTypes.bind(this, this.database));
         this.app.get("/api/getInfo", Profile.getInfo.bind(this, this.database));
         this.app.get("/api/getRoles", Profile.getRoles.bind(this, this.database));
 
         this.app.post("/api/getUserListByRole", Project.postUserListByRole.bind(this, this.database));
+        this.app.get("/api/project/getMostPopular", Project.getPopular.bind(this, this.database));
 
         //get permissions
         this.app.get("/api/createProject/getPermission", Permission.CreateProjectPermission.bind(this, this.database));
