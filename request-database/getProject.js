@@ -78,24 +78,6 @@ export function getProjectTypesImpl(database, next) {
     })
 }
 
-export function getPopular(database, next) {
-    return new Promise((resolve) => {
-        let sql = `select count(id_project_and_user) as members_count, project.id_project, title
-                  from project_and_user 
-                  left join project
-                  on project_and_user.id_project = project.id_project
-                  group by project.id_project 
-                  desc limit 3 `;
-        database.query(sql, (err, res) => {
-            if (err) {
-                return next(new errs.BadGatewayError(err));
-            }
-            console.log(res);
-            return resolve(res);
-        })
-    })
-}
-
 export function deleteProject(database, projectId, next) {
     return new Promise(resolve => {
         let sql = `DELETE FROM project_and_user WHERE id_project = ?`;
