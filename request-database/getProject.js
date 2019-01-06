@@ -80,6 +80,36 @@ export function deleteProject(database, projectId, next) {
     });
 }
 
+export function updateProject(database, projectId, data, next) {
+    return new Promise(resolve => {
+        let sql = `UPDATE project SET 
+                          description = ?,
+                          id_project_type = ?,
+                          id_user_client = ?,
+                          status = ?,
+                          title = ?
+                          is_private = ?
+                          id_project_manager = ?
+                   WHERE id_project = ?`;
+        const options = [
+            data.description,
+            data.id_project_type,
+            data.id_user_client,
+            data.status,
+            data.title,
+            data.is_private,
+            data.id_project_manager,
+            projectId
+        ];
+        database.query(sql, options, (err) => {
+            if (err) {
+                return next(new errs.BadGatewayError(err));
+            }
+            return resolve();
+        })
+    });
+}
+
 export function createTaskImpl(database, next, data) {
     return new Promise(async (resolve) => {
         let sql = `INSERT INTO task VALUES 

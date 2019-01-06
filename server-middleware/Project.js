@@ -1,5 +1,5 @@
 import {
-    addProjectTeam, deleteProject,
+    addProjectTeam, deleteProject, updateProject,
     addTaskTeam, createProjectImpl, createTaskImpl, getProject, getProjectTypesImpl, getTaskById,
     getUserListByRole
 } from "../request-database/getProject";
@@ -20,7 +20,17 @@ export class Project {
         const projectId = req.params.projectId;
         deleteProject(database, projectId, next)
             .then(() => {
-                res.send("Success delete project")
+                res.send("Success delete project");
+            })
+    }
+
+    static async updateProject(database, req, res, next) {
+        await authorization(req, res, next);
+        const projectId = req.params.projectId;
+        const data = req.body;
+        await updateProject(database, projectId, data, next)
+            .then(() => {
+                res.send("Success update project");
             })
     }
 
