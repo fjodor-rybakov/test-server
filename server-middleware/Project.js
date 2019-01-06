@@ -10,7 +10,8 @@ import {
     getProject,
     getProjectTypesImpl,
     getTaskById,
-    getUserListByRole
+    getUserListByRole,
+    getPopular
 } from "../request-database/getProject";
 import {authorization} from "../utils/authorization";
 
@@ -21,6 +22,17 @@ export class Project {
         getProject(database, userId, next)
             .then((data) => {
                 res.send(data);
+            });
+    }
+
+    static async getPopular(database, req, res, next) {
+        await authorization(req, res, next);
+        getPopular(database, next)
+            .then((data) => {
+                res.send({success: true, data: data});
+            })
+            .catch((err) => {
+                res.send({success: false, data: err});
             });
     }
 

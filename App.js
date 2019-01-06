@@ -55,6 +55,7 @@ class App {
         this.app.post("/api/createProject", Project.createProject.bind(this, this.database));
         this.app.put("/api/project/:projectId", Project.updateProject.bind(this, this.database));
         this.app.del("/api/project/:projectId", Project.deleteProject.bind(this, this.database));
+        this.app.get("/api/project/getMostPopular", Project.getPopular.bind(this, this.database));
 
         // Таски
         this.app.get("/api/task/:taskId", Project.getTask.bind(this, this.database));
