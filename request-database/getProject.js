@@ -63,7 +63,14 @@ export function getProjectTypesImpl(database, next) {
 
 export function deleteProject(database, projectId, next) {
     return new Promise(resolve => {
-        let sql = `DELETE FROM project WHERE id_project = ?`;
+        let sql = `DELETE FROM project_and_user WHERE id_project = ?`;
+        database.query(sql, [projectId], (err) => {
+            if (err) {
+                return next(new errs.BadGatewayError(err));
+            }
+        });
+
+        sql = `DELETE FROM project WHERE id_project = ?`;
         database.query(sql, [projectId], (err) => {
             if (err) {
                 return next(new errs.BadGatewayError(err));
