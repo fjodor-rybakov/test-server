@@ -50,7 +50,7 @@ export function getUserListByRole(database, next, role) {
 }
 
 export function getProjectTypesImpl(database, next) {
-    return new Promise(async (resolve) => {
+    return new Promise((resolve) => {
         let sql = `SELECT * FROM project_type`;
         database.query(sql, (err, res) => {
             if (err) {
@@ -59,6 +59,18 @@ export function getProjectTypesImpl(database, next) {
             return resolve(res);
         })
     })
+}
+
+export function deleteProject(database, projectId, next) {
+    return new Promise(resolve => {
+        let sql = `DELETE FROM project WHERE id_project = ?`;
+        database.query(sql, [projectId], (err) => {
+            if (err) {
+                return next(new errs.BadGatewayError(err));
+            }
+            return resolve();
+        });
+    });
 }
 
 export function createTaskImpl(database, next, data) {

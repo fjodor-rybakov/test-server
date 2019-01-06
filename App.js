@@ -51,6 +51,7 @@ class App {
         this.app.get("/api/profile", Profile.getProfileData.bind(this, this.database));
         this.app.post("/api/createTask", Project.createTask.bind(this, this.database));
         this.app.post("/api/createProject", Project.createProject.bind(this, this.database));
+        this.app.del("/api/project/:projectId", Project.deleteProject.bind(this, this.database));
 
         this.app.get("/api/project/:userId", Project.project.bind(this, this.database));
         this.app.get("/api/task/:taskId", Project.getTask.bind(this, this.database));
