@@ -1,6 +1,15 @@
 import {
-    addProjectTeam, deleteProject, updateProject,
-    addTaskTeam, createProjectImpl, createTaskImpl, getProject, getProjectTypesImpl, getTaskById,
+    addProjectTeam,
+    deleteProject,
+    updateProject,
+    updateTask,
+    deleteTask,
+    addTaskTeam,
+    createProjectImpl,
+    createTaskImpl,
+    getProject,
+    getProjectTypesImpl,
+    getTaskById,
     getUserListByRole
 } from "../request-database/getProject";
 import {authorization} from "../utils/authorization";
@@ -99,6 +108,25 @@ export class Project {
             })
             .catch((err) => {
                 res.send({success: false, data: err});
+            });
+    }
+
+    static async updateTask(database, req, res, next) {
+        await authorization(req, res, next);
+        const taskId = req.params.taskId;
+        const data = req.body;
+        await updateTask(database, taskId, data, next)
+            .then(() => {
+                res.send("Success update task");
+            })
+    }
+
+    static async deleteTask(database, req, res, next) {
+        await authorization(req, res, next);
+        const taskId = req.params.taskId;
+        await deleteTask(database, taskId, next)
+            .then(() => {
+                res.send("Success delete task");
             });
     }
 }
