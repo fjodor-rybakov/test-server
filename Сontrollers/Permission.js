@@ -1,5 +1,5 @@
-import {authorization} from "../utils/authorization";
-import {getCreateProjectPermission, getCreateTrackPermission, getCreateTaskPermission} from "../request-database/Permissions";
+import {authorization} from "../Utils/authorization";
+import {getCreateProjectPermission, getCreateTrackPermission, getCreateTaskPermission} from "../Services/Permissions";
 
 export class Permission {
     static async CreateProjectPermission(database, req, res, next) {
@@ -14,7 +14,7 @@ export class Permission {
         const userData = await authorization(req, res, next);
         const idTask = req.params.taskId;
         getCreateTrackPermission(database, userData.id_user, idTask, next)
-            .then((data) => {
+            .then(() => {
                 res.send(true);
             });
     }

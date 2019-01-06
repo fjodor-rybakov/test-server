@@ -1,5 +1,5 @@
-import Utils from "../utils/Utils";
-import {checkUser} from "../request-database/checkUser";
+import Utils from "../Utils/Utils";
+import {checkUser} from "../Services/checkUser";
 import * as errs from "restify-errors";
 import config from "../config";
 import * as jwt from "jsonwebtoken";

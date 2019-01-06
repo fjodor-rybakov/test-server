@@ -1,7 +1,7 @@
-import {getTasksList} from "../request-database/getTasksList";
-import {getTracks, addTrack} from "../request-database/Tracks";
-import {authorization} from "../utils/authorization";
-import Utils from "../utils/Utils";
+import {getTasksList} from "../Services/getTasksList";
+import {getTracks, addTrack} from "../Services/Tracks";
+import {authorization} from "../Utils/authorization";
+import Utils from "../Utils/Utils";
 import * as errs from "restify-errors";
 
 export class Tasks {

@@ -1,5 +1,5 @@
-import {getProjects} from "../request-database/getProjects";
-import {authorization} from "../utils/authorization";
+import {getProjects} from "../Services/getProjects";
+import {authorization} from "../Utils/authorization";
 
 export class ProjectList {
     static getProjectList(database, req, res, next) {

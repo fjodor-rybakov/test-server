@@ -1,8 +1,8 @@
-import {updateProfile} from "../request-database/updateProfile";
+import {updateProfile} from "../Services/updateProfile";
 import * as errs from "restify-errors";
-import {getProfile, getRole, getRoles} from "../request-database/getProfile";
+import {getProfile, getRole, getRoles} from "../Services/getProfile";
 import fs from "fs";
-import {authorization} from "../utils/authorization";
+import {authorization} from "../Utils/authorization";
 
 export class Profile {
     static async getProfileData(database, req, res, next) {
@@ -49,7 +49,7 @@ export class Profile {
         await authorization(req, res, next);
         const data = req.body;
         const base64Data = data.photo.replace(/^data:image\/png;base64,/, "");
-        let path = "resources/photo_" + data.id_user + ".png";
+        let path = "Resources/photo_" + data.id_user + ".png";
         if (data.photo !== "") {
             await fs.writeFile(path, base64Data, "base64", (err) => {
                 console.log(err);
@@ -74,7 +74,7 @@ export class Profile {
         return new Promise((resolve) => {
             fs.readFile(path, {encoding: "base64"}, (err) => {
                 if (err) {
-                    return resolve("resources/default-avatar.png");
+                    return resolve("Resources/default-avatar.png");
                 }
                 return resolve(path);
             });

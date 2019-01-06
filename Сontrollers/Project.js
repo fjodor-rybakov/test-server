@@ -12,8 +12,8 @@ import {
     getTaskById,
     getUserListByRole,
     getPopular
-} from "../request-database/getProject";
-import {authorization} from "../utils/authorization";
+} from "../Services/getProject";
+import {authorization} from "../Utils/authorization";
 
 export class Project {
     static async project(database, req, res, next) {

@@ -22,7 +22,8 @@ export function getPopular(database, next) {
                         COUNT(id_project_and_user) AS members_count, project.id_project, title
                   FROM project_and_user 
                         LEFT JOIN project ON project_and_user.id_project = project.id_project
-                  GROUP BY project.id_project LIMIT 3`;
+                  GROUP BY project.id_project 
+                  ORDER BY members_count DESC LIMIT 3`;
         database.query(sql, (err, res) => {
             if (err) {
                 return next(new errs.BadGatewayError(err));

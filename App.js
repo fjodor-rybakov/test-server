@@ -1,12 +1,12 @@
 import * as restify from "restify";
 import config from "./config";
-import {SignIn} from "./server-middleware/SignIn";
-import {SignUp} from "./server-middleware/SignUp";
-import {ProjectList} from "./server-middleware/ProjectList";
-import {Project} from "./server-middleware/Project";
-import {Permission} from "./server-middleware/Permission";
-import {Tasks} from "./server-middleware/Tasks";
-import {Profile} from "./server-middleware/Profile";
+import {SignIn} from "./Сontrollers/SignIn";
+import {SignUp} from "./Сontrollers/SignUp";
+import {ProjectList} from "./Сontrollers/ProjectList";
+import {Project} from "./Сontrollers/Project";
+import {Permission} from "./Сontrollers/Permission";
+import {Tasks} from "./Сontrollers/Tasks";
+import {Profile} from "./Сontrollers/Profile";
 const corsMiddleware = require('restify-cors-middleware');
 
 class App {

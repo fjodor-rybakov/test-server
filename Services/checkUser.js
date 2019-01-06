@@ -1,5 +1,5 @@
 import * as errs from "restify-errors";
-import Utils from "../utils/Utils";
+import Utils from "../Utils/Utils";
 
 export function checkUser(database, data, next) {
     return new Promise(async (resolve) => {

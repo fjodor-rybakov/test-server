@@ -1,5 +1,5 @@
-import Utils from "../utils/Utils";
-import {addUser} from "../request-database/addUser";
+import Utils from "../Utils/Utils";
+import {addUser} from "../Services/addUser";
 import * as errs from "restify-errors";
 
 export class SignUp {
