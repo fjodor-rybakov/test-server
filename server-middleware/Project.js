@@ -25,14 +25,10 @@ export class Project {
             });
     }
 
-    static async getPopular(database, req, res, next) {
-        await authorization(req, res, next);
+    static getPopular(database, req, res, next) {
         getPopular(database, next)
             .then((data) => {
-                res.send({success: true, data: data});
-            })
-            .catch((err) => {
-                res.send({success: false, data: err});
+                res.send(data);
             });
     }
 
