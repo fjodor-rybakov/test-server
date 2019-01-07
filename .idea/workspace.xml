@@ -93,6 +93,7 @@
       <find>res.send</find>
       <find>postUserListByRole</find>
       <find>createTask</find>
+      <find>CreateTrackPermission</find>
     </findStrings>
   </component>
   <component name="Git.Settings">
