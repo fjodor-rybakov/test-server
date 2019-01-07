@@ -1,10 +1,8 @@
 import * as restify from "restify";
 import config from "./config";
-import {ProjectList} from "./Сontrollers/ProjectList";
-import {Project} from "./Сontrollers/Project";
 import {Permission} from "./Сontrollers/Permission";
 import {Tasks} from "./Сontrollers/Tasks";
-import {AuthorizationController, ProfileController, ProjectController} from "./Сontrollers";
+import {AuthorizationController, ProfileController, ProjectController, TaskController} from "./Сontrollers";
 const corsMiddleware = require('restify-cors-middleware');
 
 class App {
@@ -47,11 +45,6 @@ class App {
         this.app.get("/api/getRoles", ProfileController.getRoles.bind(this, this.database));
         this.app.post("/api/getUserListByRole", ProfileController.getUserListByRole.bind(this, this.database));
 
-        this.app.get("/api/tasksList/:projectId", Tasks.tasksList.bind(this, this.database));
-
-        this.app.get("/api/tracks/:taskId", Tasks.getTracks.bind(this, this.database));
-        this.app.post("/api/track", Tasks.addTrack.bind(this, this.database));
-
         // Проекты
         this.app.get("/api/project/:userId", ProjectController.getProject.bind(this, this.database));
         this.app.get("/api/projectList", ProjectController.getProjectList.bind(this, this.database));
@@ -62,10 +55,14 @@ class App {
         this.app.get("/api/getProjectTypes", ProjectController.getProjectTypes.bind(this, this.database));
 
         // Таски
-        this.app.get("/api/task/:taskId", Project.getTask.bind(this, this.database));
-        this.app.post("/api/createTask", Project.createTask.bind(this, this.database));
-        this.app.put("/api/task/:taskId", Project.updateTask.bind(this, this.database));
-        this.app.del("/api/task/:taskId", Project.deleteTask.bind(this, this.database));
+        this.app.get("/api/task/:taskId", TaskController.getTask.bind(this, this.database));
+        this.app.get("/api/tasksList/:projectId", TaskController.tasksList.bind(this, this.database));
+        this.app.post("/api/createTask", TaskController.createTask.bind(this, this.database));
+        this.app.put("/api/task/:taskId", TaskController.updateTask.bind(this, this.database));
+        this.app.del("/api/task/:taskId", TaskController.deleteTask.bind(this, this.database));
+
+        this.app.get("/api/tracks/:taskId", Tasks.getTracks.bind(this, this.database));
+        this.app.post("/api/track", Tasks.addTrack.bind(this, this.database));
 
         //get permissions
         this.app.get("/api/createProject/getPermission", Permission.CreateProjectPermission.bind(this, this.database));

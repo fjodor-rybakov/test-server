@@ -94,7 +94,6 @@ export class ProjectServices {
             });
 
         sql = `DELETE FROM project WHERE id_project = ?`;
-
         return await database.query(sql, options)
             .catch((error) => {
                 throw new errors.BadGatewayError(error.message);

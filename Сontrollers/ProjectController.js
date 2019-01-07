@@ -1,8 +1,6 @@
 import Utils from "../Utils/Utils";
 import * as errors from "restify-errors";
 import {ProjectServices} from "../Services";
-import {authorization} from "../Utils/authorization";
-import {getProjectTypesImpl} from "../Services/getProject";
 
 const services = new ProjectServices();
 

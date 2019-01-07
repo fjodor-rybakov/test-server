@@ -95,12 +95,12 @@ export class ProfileController {
     static async getUserListByRole(database, req, res, next) {
         try {
             await Utils.authorization(req);
-            const data = req.body;
-            if (!Utils.isset(data)) {
+            const role = req.body;
+            if (!Utils.isset(role)) {
                 throw new errors.InvalidArgumentError("Not enough body data");
             }
 
-            await services.getUserListByRole(database, data.role)
+            await services.getUserListByRole(database, role)
                 .then((result) => {
                     res.send(result);
                 });

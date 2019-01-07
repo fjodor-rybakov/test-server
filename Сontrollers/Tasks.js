@@ -1,19 +1,9 @@
-import {getTasksList} from "../Services/getTasksList";
 import {getTracks, addTrack} from "../Services/Tracks";
 import {authorization} from "../Utils/authorization";
 import Utils from "../Utils/Utils";
 import * as errs from "restify-errors";
 
 export class Tasks {
-    static async tasksList(database, req, res, next) {
-        await authorization(req, res, next);
-        const projectId = req.params.projectId;
-        getTasksList(database, next, projectId)
-            .then((data) => {
-                res.send(data);
-            });
-    }
-
     static async getTracks(database, req, res, next) {
         const dataUser = await authorization(req, res, next);
         const id_user = dataUser.id_user;
