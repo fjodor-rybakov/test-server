@@ -1,8 +1,13 @@
 import * as restify from "restify";
 import config from "./config";
-import {Permission} from "./Сontrollers/Permission";
-import {AuthorizationController, ProfileController, ProjectController, TaskController} from "./Сontrollers";
-import {TrackController} from "./Сontrollers/TrackController";
+import {
+    AuthorizationController,
+    ProfileController,
+    ProjectController,
+    TaskController,
+    TrackController,
+    PermissionController
+} from "./Сontrollers";
 const corsMiddleware = require('restify-cors-middleware');
 
 class App {
@@ -65,10 +70,10 @@ class App {
         this.app.get("/api/tracks/:taskId", TrackController.getTracks.bind(this, this.database));
         this.app.post("/api/track", TrackController.addTrack.bind(this, this.database));
 
-        //get permissions
-        this.app.get("/api/createProject/getPermission", Permission.CreateProjectPermission.bind(this, this.database));
-        this.app.get("/api/createTrack/getPermission/:taskId", Permission.CreateTrackPermission.bind(this, this.database));
-        this.app.get("/api/createTask/getPermission/:projectId", Permission.CreateTaskPermission.bind(this, this.database));
+        // Пермишены
+        this.app.get("/api/createProject/getPermission", PermissionController.CreateProjectPermission.bind(this, this.database));
+        this.app.get("/api/createTrack/getPermission/:taskId", PermissionController.CreateTrackPermission.bind(this, this.database));
+        this.app.get("/api/createTask/getPermission/:projectId", PermissionController.CreateTaskPermission.bind(this, this.database));
     }
 }
 

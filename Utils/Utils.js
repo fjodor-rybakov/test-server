@@ -1,5 +1,5 @@
 import config from "../config";
-import * as errs from "restify-errors";
+import * as errors from "restify-errors";
 import * as fse from "fs-extra";
 import * as jwt from "jsonwebtoken";
 
@@ -16,7 +16,7 @@ export default class Utils {
     static checkPassword(password, originPassword) {
         const userPassword = config.crypt.decrypt(originPassword);
         if (password !== userPassword) {
-            throw new errs.BadRequestError("Password does not match");
+            throw new errors.BadRequestError("Password does not match");
         }
     }
 
@@ -40,13 +40,13 @@ export default class Utils {
     static authorization(req) {
         const token = req.headers["x-guide-key"];
         if (!Utils.isset(token)) {
-            throw new errs.InvalidArgumentError("Token not found");
+            throw new errors.InvalidArgumentError("Token not found");
         }
         try {
             return jwt.verify(token, config.jwt.secret);
         } catch (e) {
             console.log("token expired");
-            throw new errs.GoneError("token expired");
+            throw new errors.GoneError("token expired");
         }
     }
 }
