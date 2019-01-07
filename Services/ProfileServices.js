@@ -6,7 +6,7 @@ export class ProfileServices {
         const options = [id_user];
         let result = await database.query(sql, options)
             .catch((error) => {
-                throw new errors.BadGatewayError(error);
+                throw new errors.BadGatewayError(error.message);
             });
 
         if (result.length === 0) {
@@ -26,7 +26,7 @@ export class ProfileServices {
         const options = [data.first_name, data.last_name, data.email, path];
         await database.query(sql, options)
             .catch((error) => {
-                throw new errors.BadRequestError(error);
+                throw new errors.BadRequestError(error.message);
             });
     }
 
@@ -35,7 +35,7 @@ export class ProfileServices {
         const option = [id_role];
         let result = await database.query(sql, option)
             .catch((error) => {
-                throw new errors.BadGatewayError(error)
+                throw new errors.BadGatewayError(error.message)
             });
 
         if (result.length === 0) {
@@ -47,9 +47,23 @@ export class ProfileServices {
 
     async getRoles(database) {
         let sql = `SELECT * FROM role`;
+
         return await database.query(sql)
             .catch((error) => {
-                new errors.BadGatewayError(error);
+                throw new errors.BadGatewayError(error.message);
             })
+    }
+
+    async getUserListByRole(database, role) {
+        let sql = `SELECT user.last_name, user.first_name, user.id_user
+                       FROM role
+                   LEFT JOIN user ON user.id_role = role.id_role
+                       WHERE role.name = ?`;
+        let options = [role];
+
+        return await database.query(sql, options)
+            .catch((error) => {
+                throw new errors.BadGatewayError(error.message);
+            });
     }
 }

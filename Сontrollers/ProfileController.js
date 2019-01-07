@@ -84,7 +84,26 @@ export class ProfileController {
         try {
             await Utils.authorization(req);
             await services.getRoles(database)
-                .then(res.send);
+                .then((result) => {
+                    res.send(result);
+                });
+        } catch (error) {
+            return next(error);
+        }
+    }
+
+    static async getUserListByRole(database, req, res, next) {
+        try {
+            await Utils.authorization(req);
+            const data = req.body;
+            if (!Utils.isset(data)) {
+                throw new errors.InvalidArgumentError("Not enough body data");
+            }
+
+            await services.getUserListByRole(database, data.role)
+                .then((result) => {
+                    res.send(result);
+                });
         } catch (error) {
             return next(error);
         }
