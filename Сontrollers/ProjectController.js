@@ -5,7 +5,7 @@ import {ProjectServices} from "../Services";
 const services = new ProjectServices();
 
 export class ProjectController {
-    static async getProjectList(database, req, res, next) {
+    static async getProjects(database, req, res, next) {
         try {
             let dataUser = await Utils.authorization(req);
             await services.getProjects(database, dataUser)

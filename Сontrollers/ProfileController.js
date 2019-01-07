@@ -11,7 +11,6 @@ export class ProfileController {
             const dataUser = await Utils.authorization(req);
             const id_user = dataUser.id_user;
 
-            // TODO: избавиться от пирамидки
             await services.getProfile(database, id_user)
                 .then((result) => {
                     if (result.photo === "") {
@@ -63,7 +62,7 @@ export class ProfileController {
         }
     }
 
-    static async getInfo(database, req, res, next) {
+    static async getRole(database, req, res, next) {
         try {
             const dataUser = await Utils.authorization(req);
             const id_role = dataUser.id_role;
@@ -92,7 +91,7 @@ export class ProfileController {
         }
     }
 
-    static async getUserListByRole(database, req, res, next) {
+    static async getUsersByRole(database, req, res, next) {
         try {
             await Utils.authorization(req);
             const role = req.body;

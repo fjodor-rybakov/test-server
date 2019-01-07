@@ -46,34 +46,34 @@ class App {
         // Профиль
         this.app.put("/api/profile", ProfileController.updateProfile.bind(this, this.database));
         this.app.get("/api/profile", ProfileController.getProfileData.bind(this, this.database));
-        this.app.get("/api/getInfo", ProfileController.getInfo.bind(this, this.database));
-        this.app.get("/api/getRoles", ProfileController.getRoles.bind(this, this.database));
-        this.app.post("/api/getUserListByRole", ProfileController.getUserListByRole.bind(this, this.database));
+        this.app.get("/api/role", ProfileController.getRole.bind(this, this.database));
+        this.app.get("/api/roles", ProfileController.getRoles.bind(this, this.database));
+        this.app.post("/api/usersByRole", ProfileController.getUsersByRole.bind(this, this.database));
 
         // Проекты
         this.app.get("/api/project/:userId", ProjectController.getProject.bind(this, this.database));
-        this.app.get("/api/projectList", ProjectController.getProjectList.bind(this, this.database));
-        this.app.post("/api/createProject", ProjectController.createProject.bind(this, this.database));
+        this.app.get("/api/projects", ProjectController.getProjects.bind(this, this.database));
+        this.app.post("/api/project", ProjectController.createProject.bind(this, this.database));
         this.app.put("/api/project/:projectId", ProjectController.updateProject.bind(this, this.database));
         this.app.del("/api/project/:projectId", ProjectController.deleteProject.bind(this, this.database));
-        this.app.get("/api/project/getMostPopular", ProjectController.getPopularProjects.bind(this, this.database));
-        this.app.get("/api/getProjectTypes", ProjectController.getProjectTypes.bind(this, this.database));
+        this.app.get("/api/project/popular", ProjectController.getPopularProjects.bind(this, this.database));
+        this.app.get("/api/projectTypes", ProjectController.getProjectTypes.bind(this, this.database));
 
         // Таски
         this.app.get("/api/task/:taskId", TaskController.getTask.bind(this, this.database));
-        this.app.get("/api/tasksList/:projectId", TaskController.tasksList.bind(this, this.database));
-        this.app.post("/api/createTask", TaskController.createTask.bind(this, this.database));
+        this.app.get("/api/tasks/:projectId", TaskController.tasks.bind(this, this.database));
+        this.app.post("/api/task", TaskController.createTask.bind(this, this.database));
         this.app.put("/api/task/:taskId", TaskController.updateTask.bind(this, this.database));
         this.app.del("/api/task/:taskId", TaskController.deleteTask.bind(this, this.database));
 
         // Треки
-        this.app.get("/api/tracks/:taskId", TrackController.getTracks.bind(this, this.database));
+        this.app.get("/api/track/:taskId", TrackController.getTracks.bind(this, this.database));
         this.app.post("/api/track", TrackController.addTrack.bind(this, this.database));
 
         // Пермишены
-        this.app.get("/api/createProject/getPermission", PermissionController.CreateProjectPermission.bind(this, this.database));
-        this.app.get("/api/createTrack/getPermission/:taskId", PermissionController.CreateTrackPermission.bind(this, this.database));
-        this.app.get("/api/createTask/getPermission/:projectId", PermissionController.CreateTaskPermission.bind(this, this.database));
+        this.app.get("/api/project/permission", PermissionController.CreateProjectPermission.bind(this, this.database));
+        this.app.get("/api/track/permission/:taskId", PermissionController.CreateTrackPermission.bind(this, this.database));
+        this.app.get("/api/task/permission/:projectId", PermissionController.CreateTaskPermission.bind(this, this.database));
     }
 }
 

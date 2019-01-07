@@ -21,7 +21,7 @@ export class TaskController {
         }
     }
 
-    static async tasksList(database, req, res, next) {
+    static async tasks(database, req, res, next) {
         try {
             await Utils.authorization(req);
             const projectId = req.params.projectId;
