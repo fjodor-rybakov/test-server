@@ -1,8 +1,8 @@
 import * as restify from "restify";
 import config from "./config";
 import {Permission} from "./Сontrollers/Permission";
-import {Tasks} from "./Сontrollers/Tasks";
 import {AuthorizationController, ProfileController, ProjectController, TaskController} from "./Сontrollers";
+import {TrackController} from "./Сontrollers/TrackController";
 const corsMiddleware = require('restify-cors-middleware');
 
 class App {
@@ -61,8 +61,9 @@ class App {
         this.app.put("/api/task/:taskId", TaskController.updateTask.bind(this, this.database));
         this.app.del("/api/task/:taskId", TaskController.deleteTask.bind(this, this.database));
 
-        this.app.get("/api/tracks/:taskId", Tasks.getTracks.bind(this, this.database));
-        this.app.post("/api/track", Tasks.addTrack.bind(this, this.database));
+        // Треки
+        this.app.get("/api/tracks/:taskId", TrackController.getTracks.bind(this, this.database));
+        this.app.post("/api/track", TrackController.addTrack.bind(this, this.database));
 
         //get permissions
         this.app.get("/api/createProject/getPermission", Permission.CreateProjectPermission.bind(this, this.database));
