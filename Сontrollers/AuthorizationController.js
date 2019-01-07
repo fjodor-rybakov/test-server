@@ -1,5 +1,5 @@
 import Utils from "../Utils/Utils";
-import * as errs from "restify-errors";
+import * as errors from "restify-errors";
 import * as jwt from "jsonwebtoken";
 import config from "../config";
 import {AuthorizationServices} from "../Services/AuthorizationServices";
@@ -10,7 +10,7 @@ export class AuthorizationController {
     static signIn(database, req, res, next) {
         const data = req.body;
         if (!Utils.isset(data.email, data.password)) {
-            return next(new errs.InvalidArgumentError("Not enough body data"));
+            return next(new errors.InvalidArgumentError("Not enough body data"));
         }
         services.checkUser(database, data, next)
             .then((dataUser) => {
@@ -32,14 +32,14 @@ export class AuthorizationController {
     static singUp(database, req, res, next) {
         const data = req.body;
         if (!Utils.isset(data.email, data.password, data.role)) {
-            return next(new errs.InvalidArgumentError("Not enough body data"));
+            return next(new errors.InvalidArgumentError("Not enough body data"));
         }
         services.createUser(database, data, next)
             .then(() => {
                 res.send("Success create new user");
             })
-            .catch((data) => {
-                return next(data);
+            .catch((error) => {
+                return next(error);
             });
     }
 }

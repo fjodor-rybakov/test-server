@@ -1,4 +1,4 @@
-import * as errs from "restify-errors";
+import * as errors from "restify-errors";
 import config from "../config";
 import Utils from "../Utils/Utils";
 
@@ -8,19 +8,19 @@ export class AuthorizationServices {
         await database.query(sql, [data.email])
             .then((result) => {
                 if (result.length !== 0) {
-                    throw new errs.BadRequestError("Email already exist");
+                    throw new errors.BadRequestError("Email already exist");
                 }
             })
-            .catch((err) => {
-                throw new errs.BadGatewayError(err);
+            .catch((error) => {
+                throw new errors.BadGatewayError(error);
             });
 
         sql = `INSERT INTO 
                    user 
                VALUES (null, '', '', ?, '', ?, ?, 'resources/default-avatar.png')`;
         await database.query(sql, [data.role, config.crypt.encrypt(data.password), data.email])
-            .catch((err) => {
-                throw new errs.BadGatewayError(err);
+            .catch((error) => {
+                throw new errors.BadGatewayError(error);
             })
     }
 
@@ -29,12 +29,12 @@ export class AuthorizationServices {
         return await database.query(sql, [data.email])
             .then((result) => {
                 if (result.length === 0) {
-                    throw new errs.BadRequestError("User not found");
+                    throw new errors.NotFoundError("User not found");
                 }
                 return Utils.checkPassword(data.password, result);
             })
             .catch((err) => {
-                throw new errs.BadGatewayError(err);
+                throw new errors.BadGatewayError(err);
             });
     }
 }
