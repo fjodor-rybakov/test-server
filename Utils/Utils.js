@@ -14,12 +14,10 @@ export default class Utils {
     }
 
     static checkPassword(password, originData) {
-        return new Promise(resolve => {
-            if (password !== config.crypt.decrypt(originData[0].password)) {
-                throw new errs.BadRequestError("Incorrect password");
-            }
-            return resolve(originData);
-        });
+        const userPassword = config.crypt.decrypt(originData[0].password);
+        if (password !== userPassword) {
+            throw new errs.BadRequestError("Password does not match");
+        }
     }
 
     static async restorePathPhoto(path) {
