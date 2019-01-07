@@ -1,12 +1,11 @@
 import * as restify from "restify";
 import config from "./config";
-import {SignIn} from "./Сontrollers/SignIn";
-import {SignUp} from "./Сontrollers/SignUp";
 import {ProjectList} from "./Сontrollers/ProjectList";
 import {Project} from "./Сontrollers/Project";
 import {Permission} from "./Сontrollers/Permission";
 import {Tasks} from "./Сontrollers/Tasks";
 import {Profile} from "./Сontrollers/Profile";
+import {AuthorizationController} from "./Сontrollers";
 const corsMiddleware = require('restify-cors-middleware');
 
 class App {
@@ -38,8 +37,8 @@ class App {
     }
 
     initRoutes() {
-        this.app.post("/api/signIn", SignIn.signIn.bind(this, this.database));
-        this.app.post("/api/signUp", SignUp.singUp.bind(this, this.database));
+        this.app.post("/api/signIn", AuthorizationController.signIn.bind(this, this.database));
+        this.app.post("/api/signUp", AuthorizationController.singUp.bind(this, this.database));
 
         this.app.get("/api/projectList", ProjectList.getProjectList.bind(this, this.database));
         this.app.get("/api/tasksList/:projectId", Tasks.tasksList.bind(this, this.database));

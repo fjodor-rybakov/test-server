@@ -11,15 +11,13 @@ export default class Utils {
         return true;
     }
 
-    static checkPassword(password, originData, next) {
-        try {
+    static checkPassword(password, originData) {
+        return new Promise(resolve => {
             if (password === config.crypt.decrypt(originData[0].password)) {
-                return originData;
+                return resolve(originData);
             } else {
-                return next(new errs.BadRequestError("Incorrect password"))
+                throw new errs.BadRequestError("Incorrect password")
             }
-        } catch (e) {
-            return next(new errs.BadRequestError("Incorrect password"))
-        }
+        });
     }
 }
