@@ -15,8 +15,8 @@ export class AuthorizationController {
         services.checkUser(database, data, next)
             .then((dataUser) => {
                 const newDataUser = {
-                    id_user: dataUser[0].id_user,
-                    id_role: dataUser[0].id_role
+                    id_user: dataUser.id_user,
+                    id_role: dataUser.id_role
                 };
                 let token = jwt.sign(newDataUser, config.jwt.secret, {
                     expiresIn: config.leaveTimeToken

@@ -26,16 +26,16 @@ export class AuthorizationServices {
     async checkUser(database, data) {
         let sql = `SELECT * FROM user WHERE email = ?`;
         let result = await database.query(sql, [data.email])
-            .catch((err) => {
-                throw new errors.BadGatewayError(err);
+            .catch((error) => {
+                throw new errors.BadGatewayError(error);
             });
 
         if (result.length === 0) {
             throw new errors.NotFoundError("User not found");
         }
 
-        Utils.checkPassword(data.password, result);
+        Utils.checkPassword(data.password, result[0].password);
 
-        return result;
+        return result[0];
     }
 }

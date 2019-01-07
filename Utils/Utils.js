@@ -13,8 +13,8 @@ export default class Utils {
         return true;
     }
 
-    static checkPassword(password, originData) {
-        const userPassword = config.crypt.decrypt(originData[0].password);
+    static checkPassword(password, originPassword) {
+        const userPassword = config.crypt.decrypt(originPassword);
         if (password !== userPassword) {
             throw new errs.BadRequestError("Password does not match");
         }
