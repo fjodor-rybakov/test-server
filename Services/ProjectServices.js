@@ -34,11 +34,26 @@ export class ProjectServices {
         }
 
         sql = `SELECT 
-                           user.id_user, first_name, last_name, role.name as role
-                       FROM project_and_user 
-                           LEFT JOIN user ON project_and_user.id_user = user.id_user
-                           LEFT JOIN role ON user.id_role = role.id_role
-                       WHERE id_project = ?`;
+                   project.description, 
+                   project.status, 
+                   project.title, 
+                   project.is_private, 
+                   user.id_user, 
+                   first_name, 
+                   last_name, 
+                   role.name as role
+               FROM project 
+                   LEFT JOIN project_and_user ON project_and_user.id_project = project.id_project
+                   LEFT JOIN user ON project_and_user.id_user = user.id_user 
+                   LEFT JOIN role ON user.id_role = role.id_role
+               WHERE project.id_project = ?`;
+
+        /*sql = `SELECT
+                   user.id_user, first_name, last_name, role.name as role
+               FROM project_and_user 
+                   LEFT JOIN user ON project_and_user.id_user = user.id_user
+                   LEFT JOIN role ON user.id_role = role.id_role
+               WHERE id_project = ?`;*/
         option = [userId];
         let team = await database.query(sql, option)
             .catch((error) => {
@@ -55,8 +70,12 @@ export class ProjectServices {
             }
         });
 
+        console.log(info);
+        console.log("---------------------------------");
+        console.log(team);
+
         return {
-            data: info[0],
+            data: team[0],
             developers: dev,
             testers: testers
         };
