@@ -20,15 +20,17 @@ export class ProjectController {
     static async getProject(database, req, res, next) {
         try {
             await Utils.authorization(req);
-            const userId = req.params.userId;
-            if (!Utils.isset(userId)) {
+            const id = req.params.projectId;
+            if (!Utils.isset(id)) {
                 throw new errors.InvalidArgumentError("Incorrect params id");
             }
-            await services.getProject(database, userId)
+            await services.getProject(database, id)
                 .then((result) => {
+                    console.log(result);
                     res.send(result);
                 });
         } catch (error) {
+            console.log(error);
             return next(error);
         }
     }

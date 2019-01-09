@@ -24,16 +24,41 @@ export class ProjectServices {
     async getProject(database, userId) {
         let sql = `SELECT * FROM project WHERE id_project = ?`;
         const option = [userId];
-        let result = await database.query(sql, option)
+        let info = await database.query(sql, option)
             .catch((error) => {
                 throw new errors.BadRequestError(error.message);
             });
 
-        if (result.length === 0) {
+        if (info.length === 0) {
             throw new errors.NotFoundError("Project not found");
         }
 
-        return result[0];
+        let getTeam = `SELECT user.id_user, first_name, last_name, role.name as role
+            FROM project_and_user 
+            LEFT JOIN user 
+            on project_and_user.id_user = user.id_user
+            LEFT join role 
+            on user.id_role = role.id_role
+            WHERE id_project = ${userId}`;
+
+        let team = await database.query(getTeam)
+            .catch((error) => {
+                throw new errors.BadRequestError(error.message);
+            });
+        let testers = [];
+        let dev = [];
+        team.map((item) => {
+            if (item.role === "tester") {
+                testers.push(item)
+            } else {
+                dev.push(item)
+            }
+        });
+        return {
+            data: info[0],
+            developers: dev,
+            testers: testers
+        };
     }
 
     async createProject(database, data) {
@@ -64,10 +89,10 @@ export class ProjectServices {
                        id_project_type = ?,
                        id_user_client = ?,
                        status = ?,
-                       title = ?
-                       is_private = ?
+                       title = ?,
+                       is_private = ?, 
                        id_project_manager = ?
-                   WHERE id_project = ?`;
+                       WHERE id_project = ${projectId}`;
         const options = [
             data.description,
             data.id_project_type,
@@ -75,8 +100,7 @@ export class ProjectServices {
             data.status,
             data.title,
             data.is_private,
-            data.id_project_manager,
-            projectId
+            data.id_user_manager,
         ];
 
         return await database.query(sql, options)

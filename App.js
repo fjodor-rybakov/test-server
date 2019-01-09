@@ -51,7 +51,7 @@ class App {
         this.app.post("/api/usersByRole", ProfileController.getUsersByRole.bind(this, this.database));
 
         // Проекты
-        this.app.get("/api/project/:userId", ProjectController.getProject.bind(this, this.database));
+        this.app.get("/api/project/:projectId", ProjectController.getProject.bind(this, this.database));
         this.app.get("/api/projects", ProjectController.getProjects.bind(this, this.database));
         this.app.post("/api/project", ProjectController.createProject.bind(this, this.database));
         this.app.put("/api/project/:projectId", ProjectController.updateProject.bind(this, this.database));
