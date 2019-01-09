@@ -26,11 +26,9 @@ export class ProjectController {
             }
             await services.getProject(database, id)
                 .then((result) => {
-                    console.log(result);
                     res.send(result);
                 });
         } catch (error) {
-            console.log(error);
             return next(error);
         }
     }

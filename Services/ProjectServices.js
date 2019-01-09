@@ -23,7 +23,7 @@ export class ProjectServices {
 
     async getProject(database, userId) {
         let sql = `SELECT * FROM project WHERE id_project = ?`;
-        const option = [userId];
+        let option = [userId];
         let info = await database.query(sql, option)
             .catch((error) => {
                 throw new errors.BadRequestError(error.message);
@@ -33,27 +33,28 @@ export class ProjectServices {
             throw new errors.NotFoundError("Project not found");
         }
 
-        let getTeam = `SELECT user.id_user, first_name, last_name, role.name as role
-            FROM project_and_user 
-            LEFT JOIN user 
-            on project_and_user.id_user = user.id_user
-            LEFT join role 
-            on user.id_role = role.id_role
-            WHERE id_project = ${userId}`;
-
-        let team = await database.query(getTeam)
+        sql = `SELECT 
+                           user.id_user, first_name, last_name, role.name as role
+                       FROM project_and_user 
+                           LEFT JOIN user ON project_and_user.id_user = user.id_user
+                           LEFT JOIN role ON user.id_role = role.id_role
+                       WHERE id_project = ?`;
+        option = [userId];
+        let team = await database.query(sql, option)
             .catch((error) => {
                 throw new errors.BadRequestError(error.message);
             });
+
         let testers = [];
         let dev = [];
         team.map((item) => {
             if (item.role === "tester") {
-                testers.push(item)
+                testers.push(item);
             } else {
-                dev.push(item)
+                dev.push(item);
             }
         });
+
         return {
             data: info[0],
             developers: dev,
