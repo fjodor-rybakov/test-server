@@ -1,4 +1,6 @@
 import * as errors from "restify-errors";
+import {TrackServices} from "./TrackServices";
+import {TaskServices} from "./TaskServices";
 
 export class ProjectServices {
     async getProjects(database, dataUser) {
@@ -128,8 +130,24 @@ export class ProjectServices {
     }
 
     async deleteProject(database, projectId) {
-        let sql = `DELETE FROM project_and_user WHERE id_project = ?`;
+        let sql = `SELECT task.id_task FROM project
+                   LEFT JOIN task on project.id_project = task.id_project
+                   WHERE project.id_project = ?`;
         let options = [projectId];
+
+        let result = await database.query(sql, options)
+            .catch((error) => {
+                throw new errors.BadGatewayError(error.message);
+            });
+
+        const service = new TaskServices();
+
+        await Promise.all(result.map((item) => {
+            return service.deleteTask(database, item.id_task);
+        }));
+
+        sql = `DELETE FROM project_and_user WHERE id_project = ?`;
+        options = [projectId];
         await database.query(sql, options)
             .catch((error) => {
                 throw new errors.BadGatewayError(error.message);
