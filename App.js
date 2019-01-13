@@ -69,6 +69,8 @@ class App {
         // Треки
         this.app.get("/api/track/:taskId", TrackController.getTracks.bind(this, this.database));
         this.app.post("/api/track", TrackController.addTrack.bind(this, this.database));
+        this.app.put("/api/track/:taskId", TrackController.updateTrack.bind(this, this.database));
+        this.app.del("/api/track/:taskId", TrackController.deleteTrack.bind(this, this.database));
 
         // Пермишены
         this.app.get("/api/project/permission", PermissionController.CreateProjectPermission.bind(this, this.database));

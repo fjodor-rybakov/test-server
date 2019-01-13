@@ -24,4 +24,28 @@ export class TrackServices {
                 throw new errors.BadGatewayError(error.message);
             });
     }
+
+    async updateTrack(database, data, taskId) {
+        let sql = `UPDATE track SET 
+                       description = ?
+                       start_data = ?
+                       finish_data = ?
+                   WHERE id_task = ?`;
+        let options = [data.description, data.start_data, data.finish_data, taskId];
+
+        return await database.query(sql, options)
+            .catch((error) => {
+                throw new errors.BadGatewayError(error.message);
+            });
+    }
+
+    async deleteTrack(database, taskId) {
+        let sql = `DELETE FROM track WHERE id_task = ?`;
+        let options = [taskId];
+
+        return await database.query(sql, options)
+            .catch((error) => {
+                throw new errors.BadGatewayError(error.message);
+            });
+    }
 }

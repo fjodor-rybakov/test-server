@@ -109,7 +109,7 @@ export class ProjectServices {
                        title = ?,
                        is_private = ?, 
                        id_project_manager = ?
-                       WHERE id_project = ${projectId}`;
+                       WHERE id_project = ?`;
         const options = [
             data.description,
             data.id_project_type,
@@ -118,6 +118,7 @@ export class ProjectServices {
             data.title,
             data.is_private,
             data.id_user_manager,
+            projectId
         ];
 
         return await database.query(sql, options)

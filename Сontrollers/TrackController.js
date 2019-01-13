@@ -43,4 +43,39 @@ export class TrackController {
             return next(error);
         }
     }
+
+    static async updateTrack(database, req, res, next) {
+        try {
+            await Utils.authorization(req);
+            const data = req.body;
+            const taskId = req.params.taskId;
+            if (!Utils.isset(taskId)) {
+                throw new errors.InvalidArgumentError("Incorrect params id");
+            }
+
+            await services.updateTrack(database, data, taskId)
+                .then(() => {
+                    res.send("Track success update");
+                });
+        } catch (error) {
+            return next(error);
+        }
+    }
+
+    static async deleteTrack(database, req, res, next) {
+        try {
+            await Utils.authorization(req);
+            const taskId = req.params.taskId;
+            if (!Utils.isset(taskId)) {
+                throw new errors.InvalidArgumentError("Incorrect params id");
+            }
+
+            await services.deleteTrack(database, taskId)
+                .then(() => {
+                    res.send("Track success delete");
+                });
+        } catch (error) {
+            return next(error);
+        }
+    }
 }
