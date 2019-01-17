@@ -81,7 +81,6 @@ export class ProfileController {
 
     static async getRoles(database, req, res, next) {
         try {
-            await Utils.authorization(req);
             await services.getRoles(database)
                 .then((result) => {
                     res.send(result);
