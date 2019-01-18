@@ -38,8 +38,11 @@ export class ProfileController {
         try {
             await Utils.authorization(req);
             const data = req.body;
-            const base64Data = data.photo.replace(/^data:image\/png;base64,/, "");
-            let path = "Resources/photo_" + data.id_user + ".png";
+            const {typeIMG, photo} = data;
+            const dataImgIndex = photo.indexOf(",");
+            const base64Data = photo.substring(dataImgIndex + 1);
+            console.log(base64Data);
+            let path = "Resources/photo_" + data.id_user + `.${typeIMG}`;
 
             if (data.photo !== "") {
                 await fse.writeFile(path, base64Data, "base64")
