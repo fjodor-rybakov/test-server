@@ -6,7 +6,8 @@ import {
     ProjectController,
     TaskController,
     TrackController,
-    PermissionController
+    PermissionController,
+    FeedbackController
 } from "./Сontrollers";
 const corsMiddleware = require('restify-cors-middleware');
 
@@ -76,6 +77,12 @@ class App {
         this.app.get("/api/project/permission", PermissionController.CreateProjectPermission.bind(this, this.database));
         this.app.get("/api/track/permission/:taskId", PermissionController.CreateTrackPermission.bind(this, this.database));
         this.app.get("/api/task/permission/:projectId", PermissionController.CreateTaskPermission.bind(this, this.database));
+
+        // Комментарии к задачам
+        this.app.post("/api/feedback/:taskId", FeedbackController.createFeedback.bind(this, this.database));
+        this.app.get("/api/feedback/list/:taskId", FeedbackController.getAllFeedback.bind(this, this.database));
+        this.app.put("/api/feedback/:feedbackId", FeedbackController.updateFeedback.bind(this, this.database));
+        this.app.del("/api/feedback/:feedbackId", FeedbackController.deleteFeedback.bind(this, this.database));
     }
 }
 

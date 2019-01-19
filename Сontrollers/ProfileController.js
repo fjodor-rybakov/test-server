@@ -41,7 +41,6 @@ export class ProfileController {
             const {typeIMG, photo} = data;
             const dataImgIndex = photo.indexOf(",");
             const base64Data = photo.substring(dataImgIndex + 1);
-            console.log(base64Data);
             let path = "Resources/photo_" + data.id_user + `.${typeIMG}`;
 
             if (data.photo !== "") {
