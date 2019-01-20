@@ -95,9 +95,9 @@ export class TaskServices {
             });
     }
 
-    async addFile(database, path, id_task) {
-        let sql = `INSERT INTO media VALUES (null, ?, photo, '', ?)`;
-        const options = [id_task, path];
+    async addFile(database, path, typeIMG, id_task) {
+        let sql = `INSERT INTO media VALUES (null, ?, ?, null, ?)`;
+        const options = [id_task, typeIMG, path];
 
         return await database.query(sql, options)
             .catch((error) => {

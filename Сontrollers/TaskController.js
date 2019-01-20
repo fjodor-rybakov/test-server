@@ -86,7 +86,7 @@ export class TaskController {
                                 });
                         }
 
-                        await services.addFile(database, path, id_task);
+                        await services.addFile(database, path, typeIMG, id_task);
                     }
 
                     return id_task;
