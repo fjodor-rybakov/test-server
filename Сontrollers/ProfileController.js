@@ -23,7 +23,7 @@ export class ProfileController {
 
                     Utils.restorePathPhoto(result.photo)
                         .then((path) => {
-                            return Utils.getPhotoBase64(path);
+                            return Utils.getPhotoBase64(path, "png");
                         })
                         .then((photoData) => {
                             result.photo = photoData;
