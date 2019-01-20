@@ -35,15 +35,12 @@ export class FeedbackController {
             }
 
             await services.getAllFeedback(database, id_task)
-                .then((result) => {
+                .then(async (result) => {
                     if (result.photo === "") {
                         res.send(result);
                     }
 
-                    Utils.restorePathPhoto(result.photo)
-                        .then((path) => {
-                            return Utils.getPhotoBase64(path, "png");
-                        })
+                    await Utils.getPhotoBase64(result.photo, "png")
                         .then((photoData) => {
                             result.photo = photoData;
                             res.send(result);

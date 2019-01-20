@@ -119,6 +119,8 @@ export class TaskController {
                             return next(new errors.BadGatewayError("Error write file"));
                         });
                 }
+
+
             }
 
             await services.updateTask(database, taskId, data)
