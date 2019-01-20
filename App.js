@@ -68,12 +68,6 @@ class App {
         this.app.put("/api/task/:taskId", TaskController.updateTask.bind(this, this.database));
         this.app.del("/api/task/:taskId", TaskController.deleteTask.bind(this, this.database));
 
-        // Медиа файлы к таскам
-        this.app.post("/api/task/media/:taskId", TaskController.addFile.bind(this, this.database));
-        this.app.get("/api/task/media/list/:taskId", TaskController.getAllFiles.bind(this, this.database));
-        this.app.put("/api/task/media/:mediaId", TaskController.updateFile.bind(this, this.database));
-        this.app.del("/api/task/media/:mediaId", TaskController.deleteFile.bind(this, this.database));
-
         // Треки
         this.app.get("/api/track/:taskId", TrackController.getTracks.bind(this, this.database));
         this.app.post("/api/track", TrackController.addTrack.bind(this, this.database));

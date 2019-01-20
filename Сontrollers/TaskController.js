@@ -1,6 +1,7 @@
 import {TaskServices} from "../Services";
 import Utils from "../Utils/Utils";
 import * as errors from "restify-errors";
+import * as fse from "fs-extra";
 
 const services = new TaskServices();
 
@@ -43,7 +44,7 @@ export class TaskController {
         try {
             await Utils.authorization(req);
             const data = req.body;
-            const {id_project, id_user_manager, description, time, title, developers} = data;
+            const {id_project, id_user_manager, description, time, title, developers, photo} = data;
             if (!Utils.isset(id_project, id_user_manager, description, time, title, developers)) {
                 throw new errors.InvalidArgumentError("Not enough body data");
             }
@@ -53,8 +54,29 @@ export class TaskController {
             }
 
             await services.createTask(database, data)
-                .then((id) => {
-                    return services.addTaskTeam(database, data.developers, id);
+                .then(async (id) => {
+                    await services.addTaskTeam(database, data.developers, id);
+                    return id;
+                })
+                .then(async (id_task) => {
+                    if (Utils.isset(photo)) {
+                        const {typeIMG} = data;
+                        const dataImgIndex = photo.indexOf(",");
+                        const base64Data = photo.substring(dataImgIndex + 1);
+                        let countFiles = await services.getCountAllFiles(database);
+                        let path = "Resources/media/photo/photo_" + countFiles + `.${typeIMG}`;
+
+                        if (photo !== "") {
+                            await fse.writeFile(path, base64Data, "base64")
+                                .catch(() => {
+                                    return next(new errors.BadGatewayError("Error write file"));
+                                });
+                        }
+
+                        await services.addFile(database, path, id_task);
+                    }
+
+                    return id_task;
                 })
                 .then(() => {
                     res.send("Success create task");
@@ -103,16 +125,23 @@ export class TaskController {
         try {
             await Utils.authorization(req);
             const taskId = req.params.taskId;
-            const file = req;
+            const data = req.body;
+            const {typeIMG, photo} = data;
+            const dataImgIndex = photo.indexOf(",");
+            const base64Data = photo.substring(dataImgIndex + 1);
+            let path = "Resources/media/photo/photo_" + data.id_user + `.${typeIMG}`;
 
-            // console.log(req);
-            console.log(req.file);
-            console.log(req.files);
-            console.log(req.body);
+            if (data.photo !== "") {
+                await fse.writeFile(path, base64Data, "base64")
+                    .catch(() => {
+                        return next(new errors.BadGatewayError("Error write file"));
+                    });
+            }
 
-
-            res.send("Ok");
-            // await services.addFile()
+            await services.addFile(database)
+                .then(() => {
+                    res.send("Success add file to task");
+                })
         } catch (error) {
             return next(error);
         }

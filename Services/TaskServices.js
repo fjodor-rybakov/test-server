@@ -92,19 +92,9 @@ export class TaskServices {
             });
     }
 
-    async addFile(database) {
-        let sql = ``;
-        const options = [];
-
-        return await database.query(sql, options)
-            .catch((error) => {
-                throw new errors.BadGatewayError(error.message);
-            });
-    }
-
-    async getAllFiles(database) {
-        let sql = ``;
-        const options = [];
+    async addFile(database, path, id_task) {
+        let sql = `INSERT INTO media VALUES (null, ?, photo, '', ?)`;
+        const options = [id_task, path];
 
         return await database.query(sql, options)
             .catch((error) => {
@@ -130,5 +120,18 @@ export class TaskServices {
             .catch((error) => {
                 throw new errors.BadGatewayError(error.message);
             });
+    }
+
+    async getCountAllFiles(database) {
+        let sql = `SELECT MAX(media.id_media) as insert_pos FROM media`;
+
+        const result =  await database.query(sql)
+            .catch((error) => {
+                throw new errors.BadGatewayError(error.message);
+            });
+
+        const insert_pos = result[0].insert_pos;
+
+        return insert_pos === null ? 0 : insert_pos;
     }
 }
