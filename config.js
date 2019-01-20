@@ -10,7 +10,11 @@ const config = {
             host     : 'localhost',
             user     : 'root',
             password : 'qwerty123',
-            database : 'site'
+            database : 'site',
+            dateStrings: [
+                'DATE',
+                'DATETIME'
+            ]
         })
     },
     "jwt": {
