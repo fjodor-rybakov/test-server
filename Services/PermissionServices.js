@@ -20,7 +20,7 @@ export class PermissionServices {
     async getCreateTrackPermission(database, idUser, taskId) {
         let sql = `SELECT * FROM task
                LEFT JOIN task_and_user ON task_and_user.id_task = task.id_task
-               WHERE (id_user = ? OR task.id_user_manager = ?) AND id_task = ?`;
+               WHERE (id_user = ? OR task.id_user_manager = ?) AND task.id_task = ?`;
         let options = [idUser, idUser, taskId];
 
         let result = await database.query(sql, options)
