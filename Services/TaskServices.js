@@ -105,6 +105,19 @@ export class TaskServices {
             });
     }
 
+    async updateFile(database, path, typeIMG, id_task) {
+        let sql = `UPDATE media SET 
+                   media_type = ?,
+                   path = ?
+                   WHERE media.id_task = ?`;
+        const options = [typeIMG, path, id_task];
+
+        return await database.query(sql, options)
+            .catch((error) => {
+                throw new errors.BadGatewayError(error.message);
+            });
+    }
+
     async deleteFileTask(database, taskId) {
         let sql = `SELECT media.path FROM media WHERE id_task = ?`;
         let options = [taskId];
@@ -118,16 +131,6 @@ export class TaskServices {
 
         sql = `DELETE FROM media WHERE id_task = ?`;
         options = [taskId];
-
-        return await database.query(sql, options)
-            .catch((error) => {
-                throw new errors.BadGatewayError(error.message);
-            });
-    }
-
-    async updateFile(database) {
-        let sql = ``;
-        const options = [];
 
         return await database.query(sql, options)
             .catch((error) => {

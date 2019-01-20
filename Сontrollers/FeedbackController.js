@@ -36,18 +36,15 @@ export class FeedbackController {
 
             await services.getAllFeedback(database, id_task)
                 .then(async (result) => {
-                    if (result.photo === "") {
-                        res.send(result);
-                    }
+                    let dataResult = await Promise.all(result.map((item) => {
+                        return Utils.getPhotoBase64(item.photo, "png")
+                            .then((photoData) => {
+                                item.photo = photoData;
+                                return item;
+                            });
+                    }));
 
-                    await Utils.getPhotoBase64(result.photo, "png")
-                        .then((photoData) => {
-                            result.photo = photoData;
-                            res.send(result);
-                        })
-                        .catch((error) => {
-                            return next(new errors.BadGatewayError(error.message));
-                        });
+                    res.send(dataResult);
                 });
         } catch (error) {
             return next(error);

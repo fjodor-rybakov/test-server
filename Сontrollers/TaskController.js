@@ -120,7 +120,7 @@ export class TaskController {
                         });
                 }
 
-
+                await services.updateFile(database, path, typeIMG, taskId);
             }
 
             await services.updateTask(database, taskId, data)
