@@ -1,5 +1,6 @@
 import Utils from "../Utils/Utils";
 import {FeedbackServices} from "../Services";
+import * as errors from "restify-errors";
 
 const services = new FeedbackServices();
 
@@ -27,7 +28,21 @@ export class FeedbackController {
 
             await services.getAllFeedback(database, id_task)
                 .then((result) => {
-                    res.send(result);
+                    if (result.photo === "") {
+                        res.send(result);
+                    }
+
+                    Utils.restorePathPhoto(result.photo)
+                        .then((path) => {
+                            return Utils.getPhotoBase64(path);
+                        })
+                        .then((photoData) => {
+                            result.photo = photoData;
+                            res.send(result);
+                        })
+                        .catch((error) => {
+                            return next(new errors.BadGatewayError(error.message));
+                        });
                 });
         } catch (error) {
             return next(error);
