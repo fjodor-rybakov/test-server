@@ -67,7 +67,7 @@ export class TrackController {
         try {
             await Utils.authorization(req);
             const taskId = req.params.taskId;
-            if (!Utils.isset(taskId)) {
+            if (!Utils.isset(taskId) && !Utils.isNumeric(taskId)) {
                 throw new errors.InvalidArgumentError("Incorrect params id");
             }
 
