@@ -63,8 +63,7 @@ export class TaskController {
                         const {typeIMG} = data;
                         const dataImgIndex = photo.indexOf(",");
                         const base64Data = photo.substring(dataImgIndex + 1);
-                        let countFiles = await services.getCountAllFiles(database);
-                        let path = "Resources/media/photo/photo_" + countFiles + `.${typeIMG}`;
+                        let path = "Resources/media/photo/photo_" + id_task + `.${typeIMG}`;
 
                         if (photo !== "") {
                             await fse.writeFile(path, base64Data, "base64")
@@ -94,10 +93,42 @@ export class TaskController {
                 throw new errors.InvalidArgumentError("Incorrect params id");
             }
             const data = req.body;
+            const {photo} = data;
+
+            if (Utils.isset(photo)) {
+                const {typeIMG} = data;
+                const dataImgIndex = photo.indexOf(",");
+                const base64Data = photo.substring(dataImgIndex + 1);
+                let path = "Resources/media/photo/photo_" + taskId + `.${typeIMG}`;
+
+                if (photo !== "") {
+                    await fse.writeFile(path, base64Data, "base64")
+                        .catch(() => {
+                            return next(new errors.BadGatewayError("Error write file"));
+                        });
+                }
+            }
 
             await services.updateTask(database, taskId, data)
                 .then(() => {
                     res.send("Success update task");
+                });
+        } catch (error) {
+            return next(error);
+        }
+    }
+
+    static async deleteFileTask(database, req, res, next) {
+        try {
+            await Utils.authorization(req);
+            const taskId = req.params.taskId;
+            if (!Utils.isset(taskId) && !Utils.isNumeric(taskId)) {
+                throw new errors.InvalidArgumentError("Incorrect params id");
+            }
+
+            await services.deleteFileTask(database, taskId)
+                .then(() => {
+                    res.send("Success delete file from task");
                 });
         } catch (error) {
             return next(error);

@@ -1,5 +1,6 @@
 import * as errors from "restify-errors";
 import Utils from "../Utils/Utils";
+import * as fse from "fs-extra";
 
 export class TaskServices {
     async getTaskById(database, id) {
@@ -95,6 +96,26 @@ export class TaskServices {
     async addFile(database, path, id_task) {
         let sql = `INSERT INTO media VALUES (null, ?, photo, '', ?)`;
         const options = [id_task, path];
+
+        return await database.query(sql, options)
+            .catch((error) => {
+                throw new errors.BadGatewayError(error.message);
+            });
+    }
+
+    async deleteFileTask(database, taskId) {
+        let sql = `SELECT media.path FROM media WHERE id_task = ?`;
+        let options = [taskId];
+
+        const path = await database.query(sql, options)
+            .catch((error) => {
+                throw new errors.BadGatewayError(error.message);
+            });
+
+        await fse.unlinkSync(path);
+
+        sql = `DELETE FROM media WHERE id_task = ?`;
+        options = [taskId];
 
         return await database.query(sql, options)
             .catch((error) => {

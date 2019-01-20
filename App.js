@@ -67,6 +67,7 @@ class App {
         this.app.post("/api/task", TaskController.createTask.bind(this, this.database));
         this.app.put("/api/task/:taskId", TaskController.updateTask.bind(this, this.database));
         this.app.del("/api/task/:taskId", TaskController.deleteTask.bind(this, this.database));
+        this.app.del("/api/task/media/:taskId", TaskController.deleteFileTask.bind(this, this.database));
 
         // Треки
         this.app.get("/api/track/:taskId", TrackController.getTracks.bind(this, this.database));
