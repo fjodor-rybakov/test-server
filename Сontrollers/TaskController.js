@@ -16,6 +16,7 @@ export class TaskController {
 
             await services.getTaskById(database, taskId)
                 .then((result) => {
+                    console.log(result);
                     if (result.photo === "") {
                         res.send(result);
                     }

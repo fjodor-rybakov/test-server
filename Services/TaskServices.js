@@ -6,7 +6,7 @@ export class TaskServices {
     async getTaskById(database, id) {
         let sql = `SELECT * FROM task 
                    LEFT JOIN media ON media.id_task = task.id_task
-                   WHERE id_task = ?`;
+                   WHERE task.id_task = ?`;
         let options = [id];
         let result = await database.query(sql, options)
             .catch((error) => {
