@@ -12,7 +12,7 @@ export class FeedbackServices {
     }
 
     async getAllFeedback(database, id_task) {
-        let sql = `SELECT * FROM comment
+        let sql = `SELECT comment.text, user.first_name, user.last_name, user.photo, user.id_user FROM comment
                    LEFT JOIN user ON user.id_user = comment.id_user
                    WHERE id_task = ?`;
         const options = [id_task];
