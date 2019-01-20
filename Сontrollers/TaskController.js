@@ -9,7 +9,7 @@ export class TaskController {
         try {
             await Utils.authorization(req);
             const taskId = req.params.taskId;
-            if (!Utils.isset(taskId)) {
+            if (!Utils.isset(taskId) && !Utils.isNumeric(taskId)) {
                 throw new errors.InvalidArgumentError("Incorrect params id");
             }
 
@@ -26,7 +26,7 @@ export class TaskController {
         try {
             await Utils.authorization(req);
             const projectId = req.params.projectId;
-            if (!Utils.isset(projectId)) {
+            if (!Utils.isset(projectId) && !Utils.isNumeric(projectId)) {
                 throw new errors.InvalidArgumentError("Incorrect params id");
             }
 
@@ -43,9 +43,15 @@ export class TaskController {
         try {
             await Utils.authorization(req);
             const data = req.body;
-            if (!Utils.isset(data.id_project, data.id_user_manager, data.description, data.time, data.title, data.developers)) {
+            const {id_project, id_user_manager, description, time, title, developers} = data;
+            if (!Utils.isset(id_project, id_user_manager, description, time, title, developers)) {
                 throw new errors.InvalidArgumentError("Not enough body data");
             }
+
+            if (!Utils.isNumeric(time)) {
+                throw new errors.InvalidArgumentError("Incorrect time");
+            }
+
             await services.createTask(database, data)
                 .then((id) => {
                     return services.addTaskTeam(database, data.developers, id);
@@ -62,10 +68,11 @@ export class TaskController {
         try {
             await Utils.authorization(req);
             const taskId = req.params.taskId;
-            if (!Utils.isset(taskId)) {
+            if (!Utils.isset(taskId) && !Utils.isNumeric(taskId)) {
                 throw new errors.InvalidArgumentError("Incorrect params id");
             }
             const data = req.body;
+
             await services.updateTask(database, taskId, data)
                 .then(() => {
                     res.send("Success update task");
@@ -79,9 +86,10 @@ export class TaskController {
         try {
             await Utils.authorization(req);
             const taskId = req.params.taskId;
-            if (!Utils.isset(taskId)) {
+            if (!Utils.isset(taskId) && !Utils.isNumeric(taskId)) {
                 throw new errors.InvalidArgumentError("Incorrect params id");
             }
+
             await services.deleteTask(database, taskId)
                 .then(() => {
                     res.send("Success delete task");

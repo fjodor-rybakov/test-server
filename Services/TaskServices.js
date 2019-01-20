@@ -1,4 +1,5 @@
 import * as errors from "restify-errors";
+import Utils from "../Utils/Utils";
 
 export class TaskServices {
     async getTaskById(database, id) {
@@ -50,6 +51,11 @@ export class TaskServices {
 
     async updateTask(database, taskId, data) {
         const {id_project, id_user_manager, description, time, title, status} = data;
+
+        if (Utils.isset(time) && !Utils.isNumeric(time)) {
+            throw new errors.InvalidArgumentError("Incorrect time");
+        }
+
         let sql = `UPDATE task SET 
                       id_project = ?,
                       id_user_manager = ?,

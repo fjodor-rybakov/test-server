@@ -11,6 +11,10 @@ export class ProfileController {
             const dataUser = await Utils.authorization(req);
             const id_user = dataUser.id_user;
 
+            if (!Utils.isset(id_user) && !Utils.isNumeric(id_user)) {
+                throw new errors.InvalidArgumentError("Incorrect user id");
+            }
+
             await services.getProfile(database, id_user)
                 .then((result) => {
                     if (result.photo === "") {

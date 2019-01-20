@@ -10,7 +10,7 @@ export class TrackController {
             let dataUser = await Utils.authorization(req);
             const id_user = dataUser.id_user;
             const taskId = req.params.taskId;
-            if (!Utils.isset(taskId)) {
+            if (!Utils.isset(taskId) && !Utils.isNumeric(taskId)) {
                 throw new errors.InvalidArgumentError("Incorrect params id");
             }
 
@@ -31,7 +31,8 @@ export class TrackController {
         try {
             await Utils.authorization(req);
             const data = req.body;
-            if (!Utils.isset(data.start_time, data.end_time, data.id_task)) {
+            const {start_time, end_time, id_task} = data;
+            if (!Utils.isset(start_time, end_time, id_task) && !Utils.isNumeric(id_task)) {
                 return next(new errors.InvalidArgumentError("Not enough body data"));
             }
 
@@ -49,7 +50,7 @@ export class TrackController {
             await Utils.authorization(req);
             const data = req.body;
             const taskId = req.params.taskId;
-            if (!Utils.isset(taskId)) {
+            if (!Utils.isset(taskId) && !Utils.isNumeric(taskId)) {
                 throw new errors.InvalidArgumentError("Incorrect params id");
             }
 
