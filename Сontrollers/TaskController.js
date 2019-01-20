@@ -1,6 +1,7 @@
 import {TaskServices} from "../Services";
 import Utils from "../Utils/Utils";
 import * as errors from "restify-errors";
+
 const services = new TaskServices();
 
 export class TaskController {
@@ -85,6 +86,52 @@ export class TaskController {
                 .then(() => {
                     res.send("Success delete task");
                 });
+        } catch (error) {
+            return next(error);
+        }
+    }
+
+    static async addFile(database, req, res, next) {
+        try {
+            await Utils.authorization(req);
+            const taskId = req.params.taskId;
+            const file = req;
+
+            // console.log(req);
+            console.log(req.file);
+            console.log(req.files);
+            console.log(req.body);
+
+
+            res.send("Ok");
+            // await services.addFile()
+        } catch (error) {
+            return next(error);
+        }
+    }
+
+    static async getAllFiles(database, req, res, next) {
+        try {
+            await Utils.authorization(req);
+
+        } catch (error) {
+            return next(error);
+        }
+    }
+
+    static async updateFile(database, req, res, next) {
+        try {
+            await Utils.authorization(req);
+
+        } catch (error) {
+            return next(error);
+        }
+    }
+
+    static async deleteFile(database, req, res, next) {
+        try {
+            await Utils.authorization(req);
+
         } catch (error) {
             return next(error);
         }

@@ -49,6 +49,7 @@ export class TaskServices {
     }
 
     async updateTask(database, taskId, data) {
+        const {id_project, id_user_manager, description, time, title, status} = data;
         let sql = `UPDATE task SET 
                       id_project = ?,
                       id_user_manager = ?,
@@ -57,15 +58,7 @@ export class TaskServices {
                       title = ?
                       status = ?
                WHERE id_task = ?`;
-        const options = [
-            data.id_project,
-            data.id_user_manager,
-            data.description,
-            data.time,
-            data.title,
-            data.status,
-            taskId
-        ];
+        const options = [id_project, id_user_manager, description, time, title, status, taskId];
         return await database.query(sql, options)
             .catch((error) => {
                 throw new errors.BadGatewayError(error.message);
@@ -87,6 +80,46 @@ export class TaskServices {
             });
 
         sql = `DELETE FROM task WHERE id_task = ?`;
+        return await database.query(sql, options)
+            .catch((error) => {
+                throw new errors.BadGatewayError(error.message);
+            });
+    }
+
+    async addFile(database) {
+        let sql = ``;
+        const options = [];
+
+        return await database.query(sql, options)
+            .catch((error) => {
+                throw new errors.BadGatewayError(error.message);
+            });
+    }
+
+    async getAllFiles(database) {
+        let sql = ``;
+        const options = [];
+
+        return await database.query(sql, options)
+            .catch((error) => {
+                throw new errors.BadGatewayError(error.message);
+            });
+    }
+
+    async updateFile(database) {
+        let sql = ``;
+        const options = [];
+
+        return await database.query(sql, options)
+            .catch((error) => {
+                throw new errors.BadGatewayError(error.message);
+            });
+    }
+
+    async deleteFile(database) {
+        let sql = ``;
+        const options = [];
+
         return await database.query(sql, options)
             .catch((error) => {
                 throw new errors.BadGatewayError(error.message);

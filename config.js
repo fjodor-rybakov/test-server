@@ -19,7 +19,7 @@ const config = {
     crypt: new Cryptr("Qw123o@!f"),
     leaveTimeToken: "60m",
     originUrls: ["http://localhost:3000"],
-    allowHeaders: ["x-guide-key", "Cache-Control"],
+    allowHeaders: ["x-guide-key", "Cache-Control", "Content-Type", "Content-Disposition"],
 };
 
 export default config;
