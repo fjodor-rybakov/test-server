@@ -25,13 +25,15 @@ export class TrackServices {
             });
     }
 
-    async updateTrack(database, data, taskId) {
+    async updateTrack(database, data, trackId) {
+        let start_data = data.start_data + "T" + data.start_time + ":00.000";
+        let end_data = data.end_data + "T" + data.end_time + ":00.000";
         let sql = `UPDATE track SET 
-                       description = ?
-                       start_data = ?
+                       description = ?,
+                       start_data = ?,
                        finish_data = ?
-                   WHERE id_task = ?`;
-        let options = [data.description, data.start_data, data.finish_data, taskId];
+                   WHERE id_track = ?`;
+        let options = [data.description, start_data, end_data, trackId];
 
         return await database.query(sql, options)
             .catch((error) => {
@@ -40,7 +42,7 @@ export class TrackServices {
     }
 
     async deleteTrack(database, taskId) {
-        let sql = `DELETE FROM track WHERE id_task = ?`;
+        let sql = `DELETE FROM track WHERE id_track = ?`;
         let options = [taskId];
 
         return await database.query(sql, options)
