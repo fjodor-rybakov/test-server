@@ -55,7 +55,7 @@ export class TaskServices {
                       id_user_manager = ?,
                       description = ?,
                       time = ?,
-                      title = ?
+                      title = ?,
                       status = ?
                WHERE id_task = ?`;
         const options = [id_project, id_user_manager, description, time, title, status, taskId];

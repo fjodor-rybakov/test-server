@@ -12,7 +12,7 @@ export class FeedbackServices {
     }
 
     async getAllFeedback(database, id_task) {
-        let sql = `SELECT * FROM comments WHERE id_task = ?`;
+        let sql = `SELECT * FROM comment WHERE id_task = ?`;
         const options = [id_task];
 
         return await database.query(sql, options)
