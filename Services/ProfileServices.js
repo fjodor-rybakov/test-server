@@ -74,7 +74,9 @@ export class ProfileServices {
     }
 
     async getAllTaskProfile(database, id_user) {
-        let sql = `SELECT * FROM task WHERE id_user = ?`;
+        let sql = `SELECT * FROM task_and_user
+                   LEFT JOIN task ON task.id_task = task_and_user.id_task
+                   WHERE id_user = ?`;
         let options = [id_user];
 
         return await database.query(sql, options)
