@@ -16,7 +16,21 @@ export class TaskController {
 
             await services.getTaskById(database, taskId)
                 .then((result) => {
-                    res.send(result);
+                    if (result.photo === "") {
+                        res.send(result);
+                    }
+
+                    Utils.restorePathPhoto(result.photo)
+                        .then((path) => {
+                            return Utils.getPhotoBase64(path);
+                        })
+                        .then((photoData) => {
+                            result.photo = photoData;
+                            res.send(result);
+                        })
+                        .catch((error) => {
+                            return next(new errors.BadGatewayError(error.message));
+                        });
                 });
         } catch (error) {
             return next(error);
