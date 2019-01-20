@@ -2,8 +2,10 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="105d0c71-d2b8-4496-8e55-6fe5846fc8db" name="Default Changelist" comment="fix images">
-      <change beforePath="$PROJECT_DIR$/Services/AuthorizationServices.js" beforeDir="false" afterPath="$PROJECT_DIR$/Services/AuthorizationServices.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Сontrollers/AuthorizationController.js" beforeDir="false" afterPath="$PROJECT_DIR$/Сontrollers/AuthorizationController.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Services/ProfileServices.js" beforeDir="false" afterPath="$PROJECT_DIR$/Services/ProfileServices.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Services/ProjectServices.js" beforeDir="false" afterPath="$PROJECT_DIR$/Services/ProjectServices.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Utils/Utils.js" beforeDir="false" afterPath="$PROJECT_DIR$/Utils/Utils.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Сontrollers/ProjectController.js" beforeDir="false" afterPath="$PROJECT_DIR$/Сontrollers/ProjectController.js" afterDir="false" />
     </list>
     <ignored path="$PROJECT_DIR$/.tmp/" />
     <ignored path="$PROJECT_DIR$/temp/" />
@@ -28,11 +30,11 @@
           </provider>
         </entry>
       </file>
-      <file pinned="false" current-in-tab="true">
+      <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/Сontrollers/AuthorizationController.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="102">
-              <caret line="39" column="42" selection-start-line="39" selection-start-column="42" selection-end-line="39" selection-end-column="42" />
+            <state relative-caret-position="68">
+              <caret line="43" column="18" selection-start-line="43" selection-start-column="8" selection-end-line="45" selection-end-column="9" />
               <folding>
                 <element signature="e#0#35#0" expanded="true" />
               </folding>
@@ -41,10 +43,55 @@
         </entry>
       </file>
       <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/Services/AuthorizationServices.js">
+        <entry file="file://$PROJECT_DIR$/Сontrollers/ProfileController.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state>
-              <caret line="5" column="35" selection-start-line="5" selection-start-column="31" selection-end-line="5" selection-end-column="35" />
+            <state relative-caret-position="153">
+              <caret line="57" column="34" lean-forward="true" selection-start-line="57" selection-start-column="34" selection-end-line="57" selection-end-column="34" />
+              <folding>
+                <element signature="e#0#32#0" expanded="true" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/Services/ProfileServices.js">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="108">
+              <caret line="22" column="76" selection-start-line="22" selection-start-column="76" selection-end-line="22" selection-end-column="76" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/Сontrollers/ProjectController.js">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="166">
+              <caret line="45" column="32" lean-forward="true" selection-start-line="45" selection-start-column="32" selection-end-line="45" selection-end-column="32" />
+              <folding>
+                <element signature="e#0#35#0" expanded="true" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/Services/ProjectServices.js">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="261">
+              <caret line="124" column="12" selection-start-line="124" selection-start-column="12" selection-end-line="124" selection-end-column="12" />
+              <folding>
+                <element signature="e#0#41#0" expanded="true" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/Utils/Utils.js">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="261">
+              <caret line="52" selection-start-line="52" selection-end-line="53" />
             </state>
           </provider>
         </entry>
@@ -109,16 +156,12 @@
         <option value="$PROJECT_DIR$/Utils/authorization.js" />
         <option value="$PROJECT_DIR$/Services/getProject.js" />
         <option value="$PROJECT_DIR$/Сontrollers/Project.js" />
-        <option value="$PROJECT_DIR$/Services/ProfileServices.js" />
         <option value="$PROJECT_DIR$/Сontrollers/ProjectList.js" />
         <option value="$PROJECT_DIR$/Сontrollers/Tasks.js" />
         <option value="$PROJECT_DIR$/Services/PermissionServices.js" />
         <option value="$PROJECT_DIR$/Сontrollers/PermissionController.js" />
-        <option value="$PROJECT_DIR$/Utils/Utils.js" />
-        <option value="$PROJECT_DIR$/Сontrollers/ProjectController.js" />
         <option value="$PROJECT_DIR$/Сontrollers/TrackController.js" />
         <option value="$PROJECT_DIR$/Services/TrackServices.js" />
-        <option value="$PROJECT_DIR$/Services/ProjectServices.js" />
         <option value="$PROJECT_DIR$/Сontrollers/ProfileController.js" />
         <option value="$PROJECT_DIR$/Сontrollers/FedbackController.js" />
         <option value="$PROJECT_DIR$/Сontrollers/index.js" />
@@ -131,6 +174,10 @@
         <option value="$PROJECT_DIR$/Services/FeedbackServices.js" />
         <option value="$PROJECT_DIR$/Services/AuthorizationServices.js" />
         <option value="$PROJECT_DIR$/Сontrollers/AuthorizationController.js" />
+        <option value="$PROJECT_DIR$/Services/ProfileServices.js" />
+        <option value="$PROJECT_DIR$/Utils/Utils.js" />
+        <option value="$PROJECT_DIR$/Сontrollers/ProjectController.js" />
+        <option value="$PROJECT_DIR$/Services/ProjectServices.js" />
       </list>
     </option>
   </component>
@@ -287,7 +334,7 @@
       <workItem from="1547880853402" duration="1681000" />
       <workItem from="1547894011229" duration="10059000" />
       <workItem from="1547913944106" duration="7301000" />
-      <workItem from="1547974453912" duration="9202000" />
+      <workItem from="1547974453912" duration="11122000" />
     </task>
     <task id="LOCAL-00001" summary="Add popular">
       <created>1546794370193</created>
@@ -307,7 +354,7 @@
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="224976000" />
+    <option name="totallyTimeSpent" value="226896000" />
   </component>
   <component name="TodoView">
     <todo-panel id="selected-file">
@@ -461,13 +508,6 @@
     <entry file="file://$PROJECT_DIR$/Сontrollers/Permission.js" />
     <entry file="file://$PROJECT_DIR$/Services/Permissions.js" />
     <entry file="file://$PROJECT_DIR$/Utils/authorization.js" />
-    <entry file="file://$PROJECT_DIR$/Utils/Utils.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="816">
-          <caret line="48" column="28" selection-start-line="48" selection-start-column="28" selection-end-line="48" selection-end-column="28" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/Сontrollers/PermissionController.js">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="136">
@@ -503,33 +543,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="102">
           <caret line="6" column="50" selection-start-line="6" selection-start-column="50" selection-end-line="6" selection-end-column="50" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/Services/ProfileServices.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="890">
-          <caret line="61" column="29" lean-forward="true" selection-start-line="61" selection-start-column="29" selection-end-line="61" selection-end-column="29" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/Сontrollers/ProjectController.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="80">
-          <caret line="78" column="34" selection-start-line="78" selection-start-column="34" selection-end-line="78" selection-end-column="34" />
-          <folding>
-            <element signature="e#0#35#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/Services/ProjectServices.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-13">
-          <caret line="141" lean-forward="true" selection-start-line="141" selection-end-line="141" />
-          <folding>
-            <element signature="e#0#41#0" expanded="true" />
-          </folding>
         </state>
       </provider>
     </entry>
@@ -575,16 +588,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/Сontrollers/ProfileController.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="289">
-          <caret line="29" column="27" lean-forward="true" selection-start-line="15" selection-start-column="20" selection-end-line="29" selection-end-column="27" />
-          <folding>
-            <element signature="e#0#32#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/Services/TaskServices.js">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="68">
@@ -619,6 +622,13 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/Services/AuthorizationServices.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-51">
+          <caret line="5" column="10" selection-start-line="5" selection-start-column="10" selection-end-line="5" selection-end-column="10" />
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/App.js">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="40">
@@ -629,19 +639,56 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/Services/AuthorizationServices.js">
+    <entry file="file://$PROJECT_DIR$/Сontrollers/ProfileController.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state>
-          <caret line="5" column="35" selection-start-line="5" selection-start-column="31" selection-end-line="5" selection-end-column="35" />
+        <state relative-caret-position="153">
+          <caret line="57" column="34" lean-forward="true" selection-start-line="57" selection-start-column="34" selection-end-line="57" selection-end-column="34" />
+          <folding>
+            <element signature="e#0#32#0" expanded="true" />
+          </folding>
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/Сontrollers/AuthorizationController.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="102">
-          <caret line="39" column="42" selection-start-line="39" selection-start-column="42" selection-end-line="39" selection-end-column="42" />
+        <state relative-caret-position="68">
+          <caret line="43" column="18" selection-start-line="43" selection-start-column="8" selection-end-line="45" selection-end-column="9" />
           <folding>
             <element signature="e#0#35#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/Services/ProfileServices.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="108">
+          <caret line="22" column="76" selection-start-line="22" selection-start-column="76" selection-end-line="22" selection-end-column="76" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/Utils/Utils.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="261">
+          <caret line="52" selection-start-line="52" selection-end-line="53" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/Сontrollers/ProjectController.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="166">
+          <caret line="45" column="32" lean-forward="true" selection-start-line="45" selection-start-column="32" selection-end-line="45" selection-end-column="32" />
+          <folding>
+            <element signature="e#0#35#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/Services/ProjectServices.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="261">
+          <caret line="124" column="12" selection-start-line="124" selection-start-column="12" selection-end-line="124" selection-end-column="12" />
+          <folding>
+            <element signature="e#0#41#0" expanded="true" />
           </folding>
         </state>
       </provider>

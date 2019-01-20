@@ -21,9 +21,10 @@ export class ProjectController {
         try {
             await Utils.authorization(req);
             const id = req.params.projectId;
-            if (!Utils.isset(id)) {
+            if (!Utils.isset(id) && !Utils.isNumeric(id)) {
                 throw new errors.InvalidArgumentError("Incorrect params id");
             }
+
             await services.getProject(database, id)
                 .then((result) => {
                     res.send(result);
@@ -37,12 +38,14 @@ export class ProjectController {
         try {
             await Utils.authorization(req);
             const data = req.body;
-            if (!Utils.isset(data.description, data.id_project_type, data.id_user_client, data.title, data.is_private, data.id_user_manager)) {
+            const {description, id_project_type, id_user_client, title, is_private, id_user_manager, developers} = data;
+            if (!Utils.isset(description, id_project_type, id_user_client, title, is_private, id_user_manager)) {
                 throw new errors.InvalidArgumentError("Not enough body data");
             }
+
             await services.createProject(database, data)
                 .then((insertId) => {
-                    return services.addProjectTeam(database, data.developers, insertId);
+                    return services.addProjectTeam(database, developers, insertId);
                 })
                 .then(() => {
                     res.send("Success create project");

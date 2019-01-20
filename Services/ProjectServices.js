@@ -81,8 +81,9 @@ export class ProjectServices {
     }
 
     async createProject(database, data) {
+        const {description, id_project_type, id_user_client, title, is_private, id_user_manager} = data;
         let sql = `INSERT INTO project VALUES (null, ?, ?, ?, 'open', ?, ?, ?)`;
-        const options = [data.description, data.id_project_type, data.id_user_client, data.title, data.is_private, data.id_user_manager];
+        const options = [description, id_project_type, id_user_client, title, is_private, id_user_manager];
         let result = await database.query(sql, options)
             .catch((error) => {
                 throw new errors.BadGatewayError(error.message);
@@ -103,6 +104,7 @@ export class ProjectServices {
     }
 
     async updateProject(database, projectId, data) {
+        const {description, id_project_type, id_user_client, status, title, is_private, id_user_manager} = data;
         let sql = `UPDATE project SET 
                        description = ?,
                        id_project_type = ?,
@@ -113,13 +115,13 @@ export class ProjectServices {
                        id_project_manager = ?
                        WHERE id_project = ?`;
         const options = [
-            data.description,
-            data.id_project_type,
-            data.id_user_client,
-            data.status,
-            data.title,
-            data.is_private,
-            data.id_user_manager,
+            description,
+            id_project_type,
+            id_user_client,
+            status,
+            title,
+            is_private,
+            id_user_manager,
             projectId
         ];
 

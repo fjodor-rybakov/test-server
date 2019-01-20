@@ -17,13 +17,19 @@ export class ProfileServices {
     }
 
     async updateProfile(database, data, path) {
+        const {first_name, last_name, email, id_user} = data;
+
+        if (!email.match(`(?:[a-z0-9!#$%&'*+/=?^_\`{|}~-]+(?:\\.[a-z0-9!#$%&'*+/=?^_\`{|}~-]+)*|"(?:[\x01-\x08\x0b\x0c\x0e-\x1f\x21\x23-\x5b\x5d-\x7f]|\\\\[\x01-\x09\x0b\x0c\x0e-\x7f])*")@(?:(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?|\\[(?:(?:(2(5[0-5]|[0-4][0-9])|1[0-9][0-9]|[1-9]?[0-9]))\\.){3}(?:(2(5[0-5]|[0-4][0-9])|1[0-9][0-9]|[1-9]?[0-9])|[a-z0-9-]*[a-z0-9]:(?:[\x01-\x08\x0b\x0c\x0e-\x1f\x21-\x5a\x53-\x7f]|\\\\[\x01-\x09\x0b\x0c\x0e-\x7f])+)\\])`)) {
+            throw new errors.InvalidArgumentError("Incorrect email address");
+        }
+
         const sql = `UPDATE user SET 
                         first_name = ?, 
                         last_name = ?,
                         email = ?, 
                         photo = ?
-                     WHERE id_user = '${data.id_user}'`;
-        const options = [data.first_name, data.last_name, data.email, path];
+                     WHERE id_user = ?`;
+        const options = [first_name, last_name, email, path, id_user];
         await database.query(sql, options)
             .catch((error) => {
                 throw new errors.BadRequestError(error.message);

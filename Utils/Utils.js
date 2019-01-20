@@ -49,4 +49,8 @@ export default class Utils {
             throw new errors.GoneError("token expired");
         }
     }
+
+    static isNumeric(number) {
+        return !isNaN(parseFloat(number)) && isFinite(number);
+    }
 }
