@@ -72,4 +72,14 @@ export class ProfileServices {
                 throw new errors.BadGatewayError(error.message);
             });
     }
+
+    async getAllTaskProfile(database, id_user) {
+        let sql = `SELECT * FROM task WHERE id_user = ?`;
+        let options = [id_user];
+
+        return await database.query(sql, options)
+            .catch((error) => {
+                throw new errors.BadGatewayError(error.message);
+            });
+    }
 }

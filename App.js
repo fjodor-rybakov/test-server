@@ -50,6 +50,7 @@ class App {
         this.app.get("/api/role", ProfileController.getRole.bind(this, this.database));
         this.app.get("/api/roles", ProfileController.getRoles.bind(this, this.database));
         this.app.post("/api/usersByRole", ProfileController.getUsersByRole.bind(this, this.database));
+        this.app.get("/api/profile/task", ProfileController.getAllTaskProfile.bind(this, this.database));
 
         // Проекты
         this.app.get("/api/project/:projectId", ProjectController.getProject.bind(this, this.database));

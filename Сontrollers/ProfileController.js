@@ -112,4 +112,18 @@ export class ProfileController {
             return next(error);
         }
     }
+
+    static async getAllTaskProfile(database, req, res, next) {
+        try {
+            const dataUser = await Utils.authorization(req);
+            const id_user = dataUser.id_user;
+
+            await services.getAllTaskProfile(database, id_user)
+                .then((result) => {
+                    res.send(result);
+                });
+        } catch (error) {
+            return next(error);
+        }
+    }
 }
