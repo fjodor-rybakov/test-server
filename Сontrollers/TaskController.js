@@ -15,18 +15,15 @@ export class TaskController {
             }
 
             await services.getTaskById(database, taskId)
-                .then((result) => {
-                    console.log(result);
+                .then(async (result) => {
                     if (result.photo === "") {
                         res.send(result);
                     }
 
-                    Utils.restorePathPhoto(result.photo)
-                        .then((path) => {
-                            return Utils.getPhotoBase64(path);
-                        })
+                    await Utils.getPhotoBase64(result.path, result.media_type)
                         .then((photoData) => {
                             result.photo = photoData;
+                            console.log(result);
                             res.send(result);
                         })
                         .catch((error) => {

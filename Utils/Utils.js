@@ -36,10 +36,10 @@ export default class Utils {
             });
     }
 
-    static async getPhotoBase64(path) {
+    static async getPhotoBase64(path, typeFile) {
         return await fse.readFile(path, {encoding: "base64"})
             .then((photoData) => {
-                return "data:image/png;base64," + photoData;
+                return `data:image/${typeFile};base64,` + photoData;
             });
     }
 
