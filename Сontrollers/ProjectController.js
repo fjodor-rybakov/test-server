@@ -90,7 +90,18 @@ export class ProjectController {
 
     static async getPopularProjects(database, req, res, next) {
         try {
-            services.getPopularProjects(database)
+            await services.getPopularProjects(database)
+                .then((result) => {
+                    res.send(result);
+                });
+        } catch (error) {
+            return next(error);
+        }
+    }
+
+    static async getPopularProjectsByTask(database, req, res, next) {
+        try {
+            await services.getPopularProjectsByTask(database)
                 .then((result) => {
                     res.send(result);
                 });

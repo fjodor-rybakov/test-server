@@ -1,5 +1,4 @@
 import * as errors from "restify-errors";
-import {TrackServices} from "./TrackServices";
 import {TaskServices} from "./TaskServices";
 
 export class ProjectServices {
@@ -173,7 +172,21 @@ export class ProjectServices {
         return await database.query(sql)
             .catch((error) => {
                 throw new errors.BadGatewayError(error.message);
-            })
+            });
+    }
+
+    async getPopularProjectsByTask(database) {
+        let sql = `SELECT 
+                       project.id_project, COUNT(project.id_project) AS countOfProject 
+                   FROM project
+                       LEFT JOIN task on project.id_project = task.id_project
+                   GROUP BY project.id_project
+                   ORDER BY countOfProject DESC LIMIT 3`;
+
+        return await database.query(sql)
+            .catch((error) => {
+                throw new errors.BadGatewayError(error.message);
+            });
     }
 
     async getProjectTypes(database) {
