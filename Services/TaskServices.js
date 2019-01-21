@@ -106,11 +106,22 @@ export class TaskServices {
     }
 
     async updateFile(database, path, typeIMG, id_task) {
-        let sql = `UPDATE media SET 
+        let sql = `SELECT * FROM media WHERE id_task = ?`;
+        let options = [typeIMG, path, id_task];
+        let count = await database.query(sql, options)
+            .catch((error) => {
+                throw new errors.BadGatewayError(error.message);
+            });
+
+        if (!Utils.isset(count[0])) {
+            return await this.addFile(database, path, typeIMG, id_task);
+        }
+
+        sql = `UPDATE media SET 
                    media_type = ?,
                    path = ?
                    WHERE media.id_task = ?`;
-        const options = [typeIMG, path, id_task];
+        options = [typeIMG, path, id_task];
 
         return await database.query(sql, options)
             .catch((error) => {
