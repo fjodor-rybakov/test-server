@@ -4,9 +4,9 @@ import * as fse from "fs-extra";
 
 export class TaskServices {
     async getTaskById(database, id) {
-        let sql = `SELECT * FROM task 
-                   LEFT JOIN media ON media.id_task = task.id_task
-                   WHERE task.id_task = ?`;
+        let sql = `SELECT task.id_task, task.description, status, time, id_user_manager, id_project, title, path, media_type FROM task 
+                    LEFT JOIN media ON media.id_task = task.id_task
+                    WHERE task.id_task =?`;
         let options = [id];
         let result = await database.query(sql, options)
             .catch((error) => {

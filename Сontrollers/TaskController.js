@@ -16,14 +16,15 @@ export class TaskController {
 
             await services.getTaskById(database, taskId)
                 .then(async (result) => {
-                    if (result.photo === "") {
+                    console.log(result);
+                    if (!Utils.isset(result.photo)) {
                         res.send(result);
                     }
 
                     await Utils.getPhotoBase64(result.path, result.media_type)
                         .then((photoData) => {
+
                             result.photo = photoData;
-                            console.log(result);
                             res.send(result);
                         })
                         .catch((error) => {
